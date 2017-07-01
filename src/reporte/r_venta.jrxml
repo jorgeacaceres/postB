@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33ae9626-0c41-4097-a278-96d0d2848c9c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select v.f,p.nombre,sum(vd.cantidad)as cantidad, sum(vd.subtotal)as sub, p.precio_venta as precio  
+from venta_detalle as vd 
+inner join producto as p 
+on vd.codigo_producto=p.codigo 
+inner join venta as v 
+on vd.id=v.id 
+where v.f between (select f1
+		  from r_venta
+		  where id =(select COALESCE (MAX(id),0)
+		  from r_venta))
+           and  (select f2
+		from r_venta
+		where id =(select COALESCE (MAX(id),0)
+		from r_venta))
+group by v.f,p.nombre,p.precio_venta 
+order by v.f desc]]>
+	</queryString>
+	<field name="f" class="java.sql.Date"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<field name="sub" class="java.lang.Double"/>
+	<field name="precio" class="java.lang.Double"/>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{sub}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="233" y="21" width="75" height="27" uuid="953ef2eb-4ad6-479f-bb4b-a6271c535e64"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENTAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="353" y="3" width="48" height="20" uuid="969e357b-f5a4-4cc8-b4c8-fe1cd21488ba"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="172" height="20" uuid="66a2e672-b216-454f-b6b2-a89a1d8cc359"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="3" width="175" height="20" uuid="3cd6ded2-1c7a-41c1-a192-a4fa437a8539"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1" uuid="cb7e638a-2f81-4dae-8f6d-f03ccb5b8474"/>
+			</line>
+			<staticText>
+				<reportElement x="470" y="2" width="85" height="20" uuid="186f20b8-0204-489d-b7fd-692742bd17ec"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB-TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="2" width="70" height="20" uuid="81f9bfde-d611-47b8-97c2-3b045f923d62"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="0" y="4" width="172" height="20" backcolor="#FFFFFF" uuid="1920b289-f999-420d-af2d-24557bfe82cc"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{f}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement mode="Transparent" x="178" y="4" width="175" height="20" backcolor="#FFFFFF" uuid="aed15b08-4c8b-49f0-b9b5-698963116452"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement mode="Transparent" x="353" y="4" width="48" height="20" backcolor="#FFFFFF" uuid="2b16013a-6925-4d66-855e-4fc0ae2ff982"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement mode="Transparent" x="470" y="4" width="90" height="20" backcolor="#FFFFFF" uuid="b3d9607c-2160-42f5-9ec0-e708b70cf8e8"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sub}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement mode="Transparent" x="401" y="4" width="70" height="20" backcolor="#FFFFFF" uuid="5fcf681f-f4f4-4a93-94c6-42300786aac8"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="Gs #,##0">
+				<reportElement x="465" y="22" width="90" height="20" uuid="1dbb193c-19e0-4d3e-8097-bea158cea857"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="401" y="22" width="64" height="20" uuid="fb6a4883-17f7-411d-b776-274c598c5a8e"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
