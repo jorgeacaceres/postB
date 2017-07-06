@@ -1,6 +1,7 @@
 
 package controlador;
 
+import java.awt.HeadlessException;
 import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,9 +31,9 @@ public class c_producto {
         aceptar= new ImageIcon("src/graficos/aceptar.png");
         fail=new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
         String SQL ="INSERT INTO producto(codigo, nombre, precio_compra, "
-        +"precio_venta, stock, iva, activo)" 
+        +"precio_venta, stock, iva, activo, cod_barra)" 
         +"VALUES (?, ?, ?, "
-        + "?, ?, ?, ?);";
+        + "?, ?, ?, ?, ?);";
         try {
             PreparedStatement ps = getConn().prepareStatement(SQL); 
             ps.setInt(1, productos.getCodigo());
@@ -42,6 +43,7 @@ public class c_producto {
             ps.setInt(5, productos.getStock());
             ps.setInt(6, productos.getIva());
             ps.setString(7, productos.getActivo());
+            ps.setString(8, productos.getCod_barra());
             if (ps.executeUpdate() > 0) {  
                 JOptionPane.showMessageDialog(null, "AGREGADO","ATENCION",JOptionPane.WARNING_MESSAGE,aceptar);
                 return "Agregado el registro.";
@@ -55,9 +57,9 @@ public class c_producto {
     }
    
     public java.util.List<m_producto> listar() {
-    String sql = "SELECT codigo, nombre, precio_compra, precio_venta,"
+    String sql = "SELECT codigo, cod_barra, nombre, precio_compra, precio_venta,"
             + "stock, iva, activo "
-            + "FROM producto ORDER BY codigo";
+            + "FROM producto ORDER BY codigo desc";
     java.util.List<m_producto> listar = new ArrayList<m_producto>();
     try {
       PreparedStatement ps = getConn().prepareStatement(sql);
@@ -66,12 +68,13 @@ public class c_producto {
         while (rs.next()) {
                   m_producto p = new m_producto();
                   p.setCodigo(rs.getInt(1));
-                  p.setProducto(rs.getString(2));
-                  p.setPrecio_compra(rs.getDouble(3));
-                  p.setPrecio_venta(rs.getDouble(4));
-                  p.setStock(rs.getInt(5));
-                  p.setIva(rs.getInt(6));
-                  p.setActivo(rs.getString(7));
+                  p.setCod_barra(rs.getString(2));
+                  p.setProducto(rs.getString(3));
+                  p.setPrecio_compra(rs.getDouble(4));
+                  p.setPrecio_venta(rs.getDouble(5));
+                  p.setStock(rs.getInt(6));
+                  p.setIva(rs.getInt(7));
+                  p.setActivo(rs.getString(8));
                   listar.add(p);
             }
             return listar;
@@ -103,60 +106,30 @@ public class c_producto {
        }
   }  
     
-  public  java.util.List<m_producto> listarCodigo(m_producto productos) {
-    String sql = "SELECT codigo, nombre, precio_compra, precio_venta,"
+  public  java.util.List<m_producto> buscar(m_producto productos) {
+    String sql = "SELECT codigo, cod_barra, nombre, precio_compra, precio_venta,"
             + "stock, iva, activo "
-            + "FROM producto WHERE codigo = ? ORDER BY codigo";
-    java.util.List<m_producto> listaCodigo = new ArrayList<m_producto>();
+            + "FROM producto WHERE  cod_barra like ? OR nombre like ?";
+    java.util.List<m_producto> busqueda = new ArrayList<m_producto>();
     try {
       PreparedStatement ps = getConn().prepareStatement(sql);
-      ps.setInt(1, productos.getCodigo());
-      
+      ps.setString(1, '%'+productos.getCod_barra()+'%');
+      ps.setString(2, '%'+productos.getProducto()+'%');
       ResultSet rs = ps.executeQuery();
       if (rs != null) {
         while (rs.next()) {
-            m_producto mp = new m_producto();
+            m_producto mp = new m_producto(); 
             mp.setCodigo(rs.getInt(1));
-            mp.setProducto(rs.getString(2));
-            mp.setPrecio_compra(rs.getDouble(3));
-            mp.setPrecio_venta(rs.getDouble(4));
-            mp.setStock(rs.getInt(5));
-            mp.setIva(rs.getInt(6));
-            mp.setActivo(rs.getString(7));
-            listaCodigo.add(mp);
+            mp.setCod_barra(rs.getString(2));
+            mp.setProducto(rs.getString(3));
+            mp.setPrecio_compra(rs.getDouble(4));
+            mp.setPrecio_venta(rs.getDouble(5));
+            mp.setStock(rs.getInt(6));
+            mp.setIva(rs.getInt(7));
+            mp.setActivo(rs.getString(8));
+            busqueda.add(mp);
             }
-            return listaCodigo;
-            } else {
-            return null;
-        }
-     } catch (SQLException e) {
-       return null;
-    }
-  }
-  
-    public  java.util.List<m_producto> listarNombre(m_producto productos) {
-    String sql = "SELECT codigo, nombre, precio_compra, precio_venta,"
-            + "stock, iva, activo "
-            + "FROM producto WHERE  nombre like ? ORDER BY nombre";
-    java.util.List<m_producto> listaNombre = new ArrayList<m_producto>();
-    try {
-      PreparedStatement ps = getConn().prepareStatement(sql);
-      ps.setString(1, '%'+productos.getProducto()+'%');
-      
-      ResultSet rs = ps.executeQuery();
-      if (rs != null) {
-        while (rs.next()) {
-            m_producto mp = new m_producto();
-            mp.setCodigo(rs.getInt(1));
-            mp.setProducto(rs.getString(2));
-            mp.setPrecio_compra(rs.getDouble(3));
-            mp.setPrecio_venta(rs.getDouble(4));
-            mp.setStock(rs.getInt(5));
-            mp.setIva(rs.getInt(6));
-            mp.setActivo(rs.getString(7));
-            listaNombre.add(mp);
-            }
-            return listaNombre;
+            return busqueda;
             } else {
             return null;
         }
@@ -169,18 +142,19 @@ public class c_producto {
       aceptar= new ImageIcon("src/graficos/aceptar.png");
       fail=new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
       String sql = "UPDATE producto "           
-                +"SET nombre=?, precio_compra=?, precio_venta=?, " 
+                +"SET cod_barra=?, nombre=?, precio_compra=?, precio_venta=?, " 
                 +"stock=?, iva=?, activo=?" 
                 +"WHERE codigo=?;";
       try {
           PreparedStatement ps = getConn().prepareStatement(sql);
-          ps.setString(1, productos.getProducto());
-          ps.setDouble(2, productos.getPrecio_compra());
-          ps.setDouble(3, productos.getPrecio_venta());
-          ps.setInt(4, productos.getStock());
-          ps.setInt(5, productos.getIva());
-          ps.setString(6, productos.getActivo());
-          ps.setInt(7, productos.getCodigo());
+          ps.setString(1, productos.getCod_barra());
+          ps.setString(2, productos.getProducto());
+          ps.setDouble(3, productos.getPrecio_compra());
+          ps.setDouble(4, productos.getPrecio_venta());
+          ps.setInt(5, productos.getStock());
+          ps.setInt(6, productos.getIva());
+          ps.setString(7, productos.getActivo());
+          ps.setInt(8, productos.getCodigo());
           if (ps.executeUpdate() > 0) {
              JOptionPane.showMessageDialog(null, "MODIFICADO","ATENCION",JOptionPane.WARNING_MESSAGE,aceptar);
              return "registro modificado";
@@ -188,28 +162,10 @@ public class c_producto {
              JOptionPane.showMessageDialog(null, "NO MODIFICADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
              return "registro no modificado";
             }
-      } catch (Exception e) {
+      } catch (SQLException e) {
           return e.getMessage();
       }
   }
   
-  public String eliminar(m_producto productos){
-      aceptar= new ImageIcon("src/graficos/aceptar.png");
-      fail=new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
-      String sql= "DELETE FROM producto WHERE codigo = ?;";
-      try {
-          PreparedStatement ps = getConn().prepareStatement(sql);
-          ps.setInt(1, productos.getCodigo());
-            if (ps.executeUpdate() > 0) {
-            JOptionPane.showMessageDialog(null, "ELIMINADO","ATENCION",JOptionPane.WARNING_MESSAGE,aceptar);
-                return "Se ha borrado registro...";
-            }else{
-                JOptionPane.showMessageDialog(null, "NO ELIMINADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
-                return "Error al querer borrar...";
-              }
-        }catch (SQLException e) {
-            return e.getMessage();
-     }
-    }
 
 }

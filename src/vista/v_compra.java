@@ -63,28 +63,10 @@ public class v_compra extends javax.swing.JInternalFrame {
         Connection con = conexion.abrirConexion();
         m_producto p = new m_producto();
         c_producto c = new c_producto(con);
-        if (rb_codigo.isSelected()==true) {
-            p.setCodigo(Integer.parseInt(t_buscar.getText()));
-            List<m_producto> verCodigo = new ArrayList<m_producto>();
-            verCodigo=c.listarCodigo(p);
-            DefaultTableModel tbm = (DefaultTableModel)t_filtro.getModel();
-        for(int i = tbm.getRowCount()-1; i >= 0; i--){
-            tbm.removeRow(i);
-            }
-        int i = 0;
-        for(m_producto mp : verCodigo){
-           tbm.addRow(new String[1]);
-           t_filtro.setValueAt(mp.getCodigo(), i, 0);
-           t_filtro.setValueAt(mp.getProducto(), i, 1);
-           t_filtro.setValueAt(mp.getStock(), i, 2);
-           t_filtro.setValueAt(mp.getPrecio_compra().intValue(), i, 3);
-           i++;
-           }
-            conexion.cerrarConexion(con);  
-        }else if (rb_producto.isSelected()==true) {
+            p.setCod_barra(t_buscar.getText().trim());
             p.setProducto(t_buscar.getText().trim().toUpperCase());
             List<m_producto> verNombre = new ArrayList<m_producto>();
-            verNombre=c.listarNombre(p);
+            verNombre=c.buscar(p);
             DefaultTableModel tbm = (DefaultTableModel)t_filtro.getModel();
         for(int i = tbm.getRowCount()-1; i >= 0; i--){
             tbm.removeRow(i);
@@ -93,31 +75,62 @@ public class v_compra extends javax.swing.JInternalFrame {
         for(m_producto mp : verNombre){
            tbm.addRow(new String[1]);
            t_filtro.setValueAt(mp.getCodigo(), i, 0);
-           t_filtro.setValueAt(mp.getProducto(), i, 1);
-           t_filtro.setValueAt(mp.getStock(), i, 2);
-           t_filtro.setValueAt(mp.getPrecio_compra().intValue(), i, 3);
+           t_filtro.setValueAt(mp.getCod_barra(), i, 1);
+           t_filtro.setValueAt(mp.getProducto(), i, 2);
+           t_filtro.setValueAt(mp.getStock(), i, 3);
+           t_filtro.setValueAt(mp.getPrecio_compra().intValue(), i, 4);
            i++;
-           }
-            conexion.cerrarConexion(con);
         }
     }
     
     private void agregar_producto(){
-         
         int fselect = t_filtro.getSelectedRow();
+        int fcount = t_filtro.getRowCount();
         try {
-            String codigo, producto, stock, precio_compra,cantidad;
-            
-                tbm=(DefaultTableModel) t_filtro.getModel();
+            String codigo="", producto="", precio_compra="",cantidad="",cod_barra="";
+            if(fcount==1){
+                 tbm=(DefaultTableModel) t_filtro.getModel();
+                codigo=t_filtro.getValueAt(0, 0).toString();
+                cod_barra=t_filtro.getValueAt(0, 1).toString();
+                producto=t_filtro.getValueAt(0, 2).toString();
+                //stock=t_filtro.getValueAt(fselect, 2).toString();
+                precio_compra=t_filtro.getValueAt(0, 3).toString();
+            }else if (fcount>1){  
+                 tbm=(DefaultTableModel) t_filtro.getModel();
                 codigo=t_filtro.getValueAt(fselect, 0).toString();
-                producto=t_filtro.getValueAt(fselect, 1).toString();
+                cod_barra=t_filtro.getValueAt(fselect, 1).toString();
+                producto=t_filtro.getValueAt(fselect, 2).toString();
                 //stock=t_filtro.getValueAt(fselect, 2).toString();
                 precio_compra=t_filtro.getValueAt(fselect, 3).toString();
-                cantidad=(t_cantidad.getText());
-                
+            }
+            cantidad=(t_cantidad.getText());
+            if (t_compra.getRowCount()>=1){
+                String valor="";
+                int identificador=0;
+                for (int i = 0; i<t_compra.getRowCount(); i++) {
+                    if(codigo.equals(t_compra.getValueAt(i, 0).toString().trim())){
+                        valor = t_compra.getValueAt(i, 0).toString().trim();
+                        identificador= i;
+                    } 
+                }
+                if(codigo.equals(valor)){
+                    tbm=(DefaultTableModel) t_compra.getModel();
+                    String cant_aux=tbm.getValueAt(identificador, 3).toString();            
+                    String aux_cantidad = String.valueOf(Integer.parseInt(cant_aux)+Integer.parseInt(cantidad));
+                    tbm.setValueAt(aux_cantidad,identificador, 3);                           
+                }else{            
+                    tbm=(DefaultTableModel) t_compra.getModel();
+                    String filaelemento[] = {codigo,cod_barra,producto,cantidad,precio_compra};
+                    tbm.addRow(filaelemento);
+                }     
+            }else{
                 tbm=(DefaultTableModel) t_compra.getModel();
-                String filaelemento[] = {codigo,producto,cantidad,precio_compra};
+                String filaelemento[] = {codigo,cod_barra,producto,cantidad,precio_compra};
                 tbm.addRow(filaelemento);
+            }
+            
+            
+            
             
         } catch (Exception e) {
         }
@@ -137,9 +150,10 @@ public class v_compra extends javax.swing.JInternalFrame {
         for(m_producto mp : listar){
            tbm.addRow(new String[1]);
            t_filtro.setValueAt(mp.getCodigo(), i, 0);
-           t_filtro.setValueAt(mp.getProducto(), i, 1);
-           t_filtro.setValueAt(mp.getStock(), i, 2);
-           t_filtro.setValueAt(mp.getPrecio_compra().intValue(), i, 3);
+           t_filtro.setValueAt(mp.getCod_barra(), i, 1);
+           t_filtro.setValueAt(mp.getProducto(), i, 2);
+           t_filtro.setValueAt(mp.getStock(), i, 3);
+           t_filtro.setValueAt(mp.getPrecio_compra().intValue(), i, 4);
            i++;
            }
             conexion.cerrarConexion(con);  
@@ -179,8 +193,8 @@ public class v_compra extends javax.swing.JInternalFrame {
                     }
                     nro_factura=tf_nro_compra.getText();
                     codigo_producto = t_compra.getValueAt(i, 0).toString();
-                    cantidad= t_compra.getValueAt(i, 2).toString();
-                    precio_compra= t_compra.getValueAt(i, 3).toString();
+                    cantidad= t_compra.getValueAt(i, 3).toString();
+                    precio_compra= t_compra.getValueAt(i, 4).toString();
                     id=Integer.parseInt(nro_factura);
                     cod_pro=Integer.parseInt(codigo_producto);
                     cant=Integer.parseInt(cantidad);
@@ -215,11 +229,15 @@ public class v_compra extends javax.swing.JInternalFrame {
         t_filtro.getColumnModel().getColumn(1).setCellRenderer(r);
         t_filtro.getColumnModel().getColumn(2).setCellRenderer(r);   
         t_filtro.getColumnModel().getColumn(3).setCellRenderer(r);
+        t_filtro.getColumnModel().getColumn(4).setCellRenderer(r);
         t_filtro.setAutoResizeMode(t_filtro.AUTO_RESIZE_OFF);
-        t_filtro.getColumnModel().getColumn(0).setPreferredWidth(45);
-        t_filtro.getColumnModel().getColumn(1).setPreferredWidth(290);
-        t_filtro.getColumnModel().getColumn(2).setPreferredWidth(70);
-        t_filtro.getColumnModel().getColumn(3).setPreferredWidth(108);
+        t_filtro.getColumnModel().getColumn(0).setMaxWidth(0);
+        t_filtro.getColumnModel().getColumn(0).setMinWidth(0);
+        t_filtro.getColumnModel().getColumn(0).setPreferredWidth(0);
+        t_filtro.getColumnModel().getColumn(1).setPreferredWidth(135);
+        t_filtro.getColumnModel().getColumn(2).setPreferredWidth(252);
+        t_filtro.getColumnModel().getColumn(3).setPreferredWidth(55);
+        t_filtro.getColumnModel().getColumn(4).setPreferredWidth(104);
         t_filtro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
@@ -233,11 +251,15 @@ public class v_compra extends javax.swing.JInternalFrame {
         t_compra.getColumnModel().getColumn(1).setCellRenderer(r);
         t_compra.getColumnModel().getColumn(2).setCellRenderer(r);
         t_compra.getColumnModel().getColumn(3).setCellRenderer(r);
+        t_compra.getColumnModel().getColumn(4).setCellRenderer(r);
         t_compra.setAutoResizeMode(t_filtro.AUTO_RESIZE_OFF);
-        t_compra.getColumnModel().getColumn(0).setPreferredWidth(50);
-        t_compra.getColumnModel().getColumn(1).setPreferredWidth(240);
-        t_compra.getColumnModel().getColumn(2).setPreferredWidth(90);
-        t_compra.getColumnModel().getColumn(3).setPreferredWidth(115);
+        t_compra.getColumnModel().getColumn(0).setMinWidth(0);
+        t_compra.getColumnModel().getColumn(0).setMaxWidth(0);
+        t_compra.getColumnModel().getColumn(0).setPreferredWidth(0);
+        t_compra.getColumnModel().getColumn(1).setPreferredWidth(135);
+        t_compra.getColumnModel().getColumn(2).setPreferredWidth(240);
+        t_compra.getColumnModel().getColumn(3).setPreferredWidth(90);
+        t_compra.getColumnModel().getColumn(4).setPreferredWidth(105);
         t_compra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
@@ -304,8 +326,6 @@ public class v_compra extends javax.swing.JInternalFrame {
         d_agregar = new javax.swing.JDialog();
         p_busqueda = new javax.swing.JPanel();
         t_buscar = new javax.swing.JTextField();
-        rb_codigo = new javax.swing.JRadioButton();
-        rb_producto = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         t_filtro = new JTable(){
@@ -356,24 +376,6 @@ public class v_compra extends javax.swing.JInternalFrame {
             }
         });
 
-        bg_busqueda.add(rb_codigo);
-        rb_codigo.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        rb_codigo.setText("CODIGO");
-        rb_codigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rb_codigoActionPerformed(evt);
-            }
-        });
-
-        bg_busqueda.add(rb_producto);
-        rb_producto.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        rb_producto.setText("ARTICULO");
-        rb_producto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rb_productoActionPerformed(evt);
-            }
-        });
-
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/herramienta-de-busqueda-de-icono-8960-32.png"))); // NOI18N
 
         javax.swing.GroupLayout p_busquedaLayout = new javax.swing.GroupLayout(p_busqueda);
@@ -384,12 +386,8 @@ public class v_compra extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(t_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rb_codigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rb_producto)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addComponent(t_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         p_busquedaLayout.setVerticalGroup(
             p_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,10 +395,7 @@ public class v_compra extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(p_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addGroup(p_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(t_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(rb_codigo)
-                        .addComponent(rb_producto)))
+                    .addComponent(t_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -410,7 +405,7 @@ public class v_compra extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "COD", "ARTICULO", "STOCK", "P. COMPRA"
+                "COD", "COD BARRA", "ARTICULO", "STOCK", "PRE. COMPRA"
             }
         ));
         t_filtro.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -460,13 +455,14 @@ public class v_compra extends javax.swing.JInternalFrame {
                         .addGap(50, 50, 50)
                         .addComponent(b_agregar)
                         .addGap(28, 28, 28)
-                        .addComponent(b_salir))
+                        .addComponent(b_salir)
+                        .addGap(0, 56, Short.MAX_VALUE))
                     .addGroup(d_agregarLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(d_agregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2)
-                            .addComponent(p_busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(d_agregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(p_busqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))))
+                .addContainerGap())
         );
         d_agregarLayout.setVerticalGroup(
             d_agregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,14 +470,14 @@ public class v_compra extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addComponent(p_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(d_agregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_salir)
                     .addComponent(b_agregar)
                     .addComponent(t_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         setClosable(true);
@@ -511,7 +507,7 @@ public class v_compra extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "COD", "ARTICULO", "CANTIDAD", "P. COMPRA"
+                "COD", "COD BARRA", "ARTICULO", "CANTIDAD", "P. COMPRA"
             }
         ));
         jScrollPane1.setViewportView(t_compra);
@@ -553,8 +549,8 @@ public class v_compra extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(b_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -570,7 +566,7 @@ public class v_compra extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(b_add)
@@ -592,11 +588,10 @@ public class v_compra extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_addActionPerformed
-        d_agregar.setSize(580,475);
+        d_agregar.setSize(595,380);
         d_agregar.setLocationRelativeTo(null);
         d_agregar.setModal(true);
         d_agregar.setVisible(true);
-        ver_datos();
     }//GEN-LAST:event_b_addActionPerformed
 
     private void t_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_buscarKeyReleased
@@ -604,11 +599,21 @@ public class v_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_buscarKeyReleased
 
     private void t_buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_buscarKeyTyped
-        if (rb_codigo.isSelected()==true) {
-            char digito = evt.getKeyChar();
-            if(!Character.isDigit(digito)){  
-            evt.consume();
-            } 
+            char tecla=evt.getKeyChar();
+        if(tecla==KeyEvent.VK_ENTER){
+           if(t_filtro.getRowCount()>1){
+                JOptionPane.showMessageDialog(null,"SELECCIONE ARTICULO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            }else if (t_filtro.getRowCount()==0){
+                JOptionPane.showMessageDialog(null,"NO EXISTE PRODUCTO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+                
+            }else{
+                this.t_cantidad.requestFocus();
+            }
+        }else if(tecla==KeyEvent.VK_ESCAPE){
+            t_cantidad.setText("");         
+            t_buscar.setText("");
+            ver_datos();
+            d_agregar.dispose();
         }
     }//GEN-LAST:event_t_buscarKeyTyped
 
@@ -625,8 +630,9 @@ public class v_compra extends javax.swing.JInternalFrame {
                 t_cantidad.requestFocus();
             }else{
                  agregar_producto();
-                 ver_datos();
-                 t_cantidad.setText("");
+                  t_cantidad.setText("");         
+                  t_buscar.setText("");
+                  t_buscar.requestFocus();
             }
     }//GEN-LAST:event_b_agregarActionPerformed
 
@@ -642,18 +648,11 @@ public class v_compra extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_b_grabarActionPerformed
 
-    private void rb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_codigoActionPerformed
-        t_buscar.setText("");
-        t_buscar.requestFocus();
-    }//GEN-LAST:event_rb_codigoActionPerformed
-
-    private void rb_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_productoActionPerformed
-        t_buscar.setText("");
-        t_buscar.requestFocus();
-    }//GEN-LAST:event_rb_productoActionPerformed
-
     private void b_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_salirActionPerformed
-         d_agregar.setVisible(false);
+        t_cantidad.setText("");         
+        t_buscar.setText(""); 
+        ver_datos(); 
+        d_agregar.setVisible(false);
     }//GEN-LAST:event_b_salirActionPerformed
 
     private void b_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_closeActionPerformed
@@ -676,9 +675,14 @@ public class v_compra extends javax.swing.JInternalFrame {
             evt.consume(); 
             }
             if(tecla==KeyEvent.VK_ENTER){
-            agregar_producto();
-             t_cantidad.setText("");
+                agregar_producto();
+                t_cantidad.setText("");
+                t_buscar.setText("");
+                t_buscar.requestFocus();
             }else if(tecla==KeyEvent.VK_ESCAPE){
+                t_cantidad.setText("");         
+                t_buscar.setText("");
+                ver_datos();
                 d_agregar.dispose();
             }
     }//GEN-LAST:event_t_cantidadKeyTyped
@@ -705,8 +709,6 @@ public class v_compra extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel p_busqueda;
-    private javax.swing.JRadioButton rb_codigo;
-    private javax.swing.JRadioButton rb_producto;
     private javax.swing.JTextField t_buscar;
     private javax.swing.JTextField t_cantidad;
     private javax.swing.JTable t_compra;

@@ -345,6 +345,11 @@ public class v_proveedor extends javax.swing.JInternalFrame {
         jLabel6.setText("BUSCAR");
 
         tf_busqueda.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        tf_busqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_busquedaActionPerformed(evt);
+            }
+        });
         tf_busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_busquedaKeyReleased(evt);
@@ -456,6 +461,10 @@ public class v_proveedor extends javax.swing.JInternalFrame {
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         nuevo_registro();
     }//GEN-LAST:event_formInternalFrameActivated
+
+    private void tf_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_busquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_busquedaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_agregar;
