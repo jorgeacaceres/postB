@@ -3,10 +3,12 @@ package vista;
 import controlador.c_producto;
 import controlador.conexion;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -205,6 +207,12 @@ public class v_b_producto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void t_buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_buscarKeyTyped
+        char tecla=evt.getKeyChar();
+        if(tecla==KeyEvent.VK_ENTER){
+           buscar();
+        }else if(tecla==KeyEvent.VK_ESCAPE){
+         t_buscar.setText("");
+        }
     }//GEN-LAST:event_t_buscarKeyTyped
 
     private void t_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_buscarKeyReleased
