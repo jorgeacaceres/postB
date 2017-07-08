@@ -205,7 +205,7 @@ public class principal extends javax.swing.JFrame {
         mb_principal.add(m_busqueda);
 
         m_reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/SEO-icon.png"))); // NOI18N
-        m_reporte.setText("Reporte");
+        m_reporte.setText("Reportes");
         m_reporte.setEnabled(false);
 
         jm_stock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/favoritos-bebidas-texto-web20-icono-6059-32.png"))); // NOI18N

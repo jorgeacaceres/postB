@@ -119,10 +119,12 @@ public class v_proveedor extends javax.swing.JInternalFrame {
         t_proveedor.getColumnModel().getColumn(3).setCellRenderer(r);
         
         t_proveedor.setAutoResizeMode(t_proveedor.AUTO_RESIZE_OFF);
-        t_proveedor.getColumnModel().getColumn(0).setPreferredWidth(60);
-        t_proveedor.getColumnModel().getColumn(1).setPreferredWidth(120);
-        t_proveedor.getColumnModel().getColumn(2).setPreferredWidth(270);
-        t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(110);
+        t_proveedor.getColumnModel().getColumn(0).setMaxWidth(0);
+        t_proveedor.getColumnModel().getColumn(0).setMinWidth(0);
+        t_proveedor.getColumnModel().getColumn(0).setPreferredWidth(0);
+        t_proveedor.getColumnModel().getColumn(1).setPreferredWidth(140);
+        t_proveedor.getColumnModel().getColumn(2).setPreferredWidth(280);
+        t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(127);
         t_proveedor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
@@ -197,7 +199,7 @@ public class v_proveedor extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("PROVEEDORES");
+        setTitle("PROVEEDOR");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -415,12 +417,16 @@ public class v_proveedor extends javax.swing.JInternalFrame {
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
         if(tf_ci_ruc.getText().equals("")&&tf_nombre_razon.getText().equals("")&&tf_telefono.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
         }else if(tf_ci_ruc.getText().equals("")){
             JOptionPane.showMessageDialog(this, "IINGRESE CI/RUC","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
         }else if(tf_nombre_razon.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE NOMBRE/RAZON","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_nombre_razon.requestFocus();
         }else if(tf_telefono.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE TELEFONO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_telefono.requestFocus();
         }else{    
             agregar_registro();
             nuevo_registro();
@@ -440,11 +446,25 @@ public class v_proveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
-       modificar_registro();
-       nuevo_registro();
-       ver_datos();
-       b_agregar.setEnabled(true);
-       b_modificar.setEnabled(false);
+      if(tf_ci_ruc.getText().equals("")&&tf_nombre_razon.getText().equals("")&&tf_telefono.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
+        }else if(tf_ci_ruc.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "IINGRESE CI/RUC","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
+        }else if(tf_nombre_razon.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE NOMBRE/RAZON","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_nombre_razon.requestFocus();
+        }else if(tf_telefono.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE TELEFONO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_telefono.requestFocus();
+        }else{    
+            modificar_registro();
+            nuevo_registro();
+            ver_datos();
+            b_agregar.setEnabled(true);
+            b_modificar.setEnabled(false);
+        }
     }//GEN-LAST:event_b_modificarActionPerformed
 
     private void t_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMouseClicked

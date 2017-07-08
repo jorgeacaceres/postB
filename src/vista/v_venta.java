@@ -5,6 +5,7 @@ import controlador.c_venta;
 import controlador.c_venta_detalle;
 import controlador.comunes;
 import controlador.conexion;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -41,6 +42,7 @@ public class v_venta extends javax.swing.JInternalFrame {
     Double t_exentas=0d,t_iva_5=0d,t_iva_10=0d,total=0d;
     Double l_iva_5=0d,l_iva_10=0d,l_total=0d;
     DecimalFormat fd = new DecimalFormat("###0");
+    DecimalFormat fd_total = new DecimalFormat("Gs #,##0");
     Icon grabar;
     Icon eliminar;
     public static String i_venta;
@@ -48,6 +50,7 @@ public class v_venta extends javax.swing.JInternalFrame {
 
     public v_venta() {
         initComponents();
+        lbl_total_pagar.setText(fd_total.format(total));
         grabar= new ImageIcon("src/graficos/guardar-archivo-icono-6713-32.png");
         eliminar= new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
         int a = principal.dp_principal.getWidth()-this.getWidth();
@@ -485,11 +488,14 @@ public class v_venta extends javax.swing.JInternalFrame {
                             f_10=tbm.getValueAt(i, 7).toString();
                             t_iva10=t_iva10+Integer.parseInt(f_10);
                         }
+                        
                         tf_exentas.setText(String.valueOf(t_exe));
                         tf_iva_5.setText(String.valueOf(t_iva5));
                         tf_iva_10.setText(String.valueOf(t_iva10));
+                        
                         total=Double.parseDouble(tf_exentas.getText())+Double.parseDouble(tf_iva_5.getText())+Double.parseDouble(tf_iva_10.getText());
                         tf_total.setText(fd.format(total));
+                        lbl_total_pagar.setText(fd_total.format(total));
                         l_iva_5=Double.parseDouble(tf_iva_5.getText())/21d;
                         tf_iva5.setText(fd.format(l_iva_5));
                         l_iva_10=Double.parseDouble(tf_iva_10.getText())/11d;
@@ -549,6 +555,7 @@ public class v_venta extends javax.swing.JInternalFrame {
                       }
                       total=t_exentas+t_iva_5+t_iva_10;
                       tf_total.setText(fd.format(total));
+                      lbl_total_pagar.setText(fd_total.format(total));
                       l_total=Double.parseDouble(tf_iva5.getText())+Double.parseDouble(tf_iva10.getText());
                       tf_iva_total.setText(fd.format(l_total));
                       tbm.removeRow(fsel);
@@ -671,6 +678,8 @@ public class v_venta extends javax.swing.JInternalFrame {
         b_factura = new javax.swing.JButton();
         bt_cancelar = new javax.swing.JButton();
         b_close = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lbl_total_pagar = new javax.swing.JLabel();
 
         d_agregar_producto.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_agregar_producto.setTitle("PRODUCTOS");
@@ -967,7 +976,7 @@ public class v_venta extends javax.swing.JInternalFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tf_total.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        tf_total.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         tf_total.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tf_total.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         tf_total.setEnabled(false);
@@ -983,7 +992,7 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addGap(77, 77, 77)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1314,6 +1323,29 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addGap(149, 149, 149))
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TOTAL A PAGA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 11))); // NOI18N
+
+        lbl_total_pagar.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
+        lbl_total_pagar.setForeground(new java.awt.Color(0, 0, 255));
+        lbl_total_pagar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_total_pagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_total_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1324,7 +1356,8 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1333,10 +1366,12 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(p_cabecera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
@@ -1363,6 +1398,7 @@ public class v_venta extends javax.swing.JInternalFrame {
                 
             }else{
                 this.t_cantidad.requestFocus();
+                t_cantidad.setText("1");
             }
         }else if(tecla==KeyEvent.VK_ESCAPE){
             t_cantidad.setText("");         
@@ -1547,6 +1583,7 @@ public class v_venta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel9;
@@ -1554,6 +1591,7 @@ public class v_venta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private com.toedter.calendar.JDateChooser jdt;
+    private javax.swing.JLabel lbl_total_pagar;
     private javax.swing.JPanel p_busqueda;
     private javax.swing.JPanel p_cabecera;
     private javax.swing.JPanel p_detalle;

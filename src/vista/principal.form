@@ -193,7 +193,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/graficos/SEO-icon.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Reporte"/>
+            <Property name="text" type="java.lang.String" value="Reportes"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>

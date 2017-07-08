@@ -46,7 +46,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
 
     private void agregar_registro(){
         Integer iva=0,stock=0;
-        String activo="", codigo_barra="";
+        String activo="";
         Connection con = conexion.abrirConexion();
         m_producto p = new m_producto();
         c_producto c = new c_producto(con);
@@ -301,7 +301,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         t_product.getColumnModel().getColumn(4).setPreferredWidth(90);
         t_product.getColumnModel().getColumn(5).setPreferredWidth(55);
         t_product.getColumnModel().getColumn(6).setPreferredWidth(36);
-        t_product.getColumnModel().getColumn(7).setPreferredWidth(55);
+        t_product.getColumnModel().getColumn(7).setPreferredWidth(65);
     }
     
      @SuppressWarnings("unchecked")
@@ -347,7 +347,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("ARTICULOS");
+        setTitle("ARTICULO");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -432,7 +432,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel6.setText("VALOR");
+        jLabel6.setText("IVA");
 
         b_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/bg-nueva-pestana-icono-8859-32.png"))); // NOI18N
         b_nuevo.setText("NUEVO");
@@ -587,11 +587,11 @@ public class v_m_producto extends javax.swing.JInternalFrame {
 
         t_buscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         t_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                t_buscarKeyTyped(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 t_buscarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                t_buscarKeyTyped(evt);
             }
         });
 
@@ -660,15 +660,19 @@ public class v_m_producto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
-        String p,prc,prv,s;
+        String p,prc,prv,s,cod;
+        cod=t_cod_barra.getText();
         p=t_producto.getText();
         prc=t_precio_compra.getText();
         prv=t_precio_venta.getText();
         s=t_stock.getText();
         if (t_stock.isEnabled()==true) {
-            if (p.equals("")&& prc.equals("")&&prv.equals("")&&s.equals("")&&rb_iva5.isSelected()==false&&rb_iva10.isSelected()==false&&rb_exentas.isSelected()==false) {
-            JOptionPane.showMessageDialog(this, "COMPLETE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
-            t_producto.requestFocus();
+            if (cod.equals("")&&p.equals("")&& prc.equals("")&&prv.equals("")&&s.equals("")&&rb_iva5.isSelected()==false&&rb_iva10.isSelected()==false&&rb_exentas.isSelected()==false) {
+                JOptionPane.showMessageDialog(this, "COMPLETE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+                t_cod_barra.requestFocus();
+            }else if (cod.equals("")){
+                JOptionPane.showMessageDialog(this, "INGRESE CODIGO DE BARRA","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+                t_cod_barra.requestFocus();
             }else if (p.equals("")){
                 JOptionPane.showMessageDialog(this, "INGRESE PRODUCTO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
                 t_producto.requestFocus();
@@ -743,17 +747,44 @@ public class v_m_producto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void t_buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_buscarKeyTyped
+        char tecla=evt.getKeyChar();
+        if(tecla==KeyEvent.VK_ENTER){
+           buscar();
+        }else if(tecla==KeyEvent.VK_ESCAPE){
+            t_buscar.setText("");
+        }
     }//GEN-LAST:event_t_buscarKeyTyped
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
-        String p,prc,prv,s;
+        String p,prc,prv,s,cod;
+        cod=t_cod_barra.getText();
         p=t_producto.getText();
         prc=t_precio_compra.getText();
         prv=t_precio_venta.getText();
         s=t_stock.getText();
-        
-        if (p.equals("")&& prc.equals("")&&prv.equals("")&&s.equals("")&&rb_iva5.isSelected()==false&&rb_iva10.isSelected()==false&&rb_exentas.isSelected()==false) {
-            JOptionPane.showMessageDialog(this, "SELECCIONE PRODUCTO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+        if (cod.equals("")&&p.equals("")&& prc.equals("")&&prv.equals("")&&s.equals("")&&rb_iva5.isSelected()==false&&rb_iva10.isSelected()==false&&rb_exentas.isSelected()==false) {
+            JOptionPane.showMessageDialog(this, "COMPLETE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            t_cod_barra.requestFocus();
+        }else if (cod.equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE CODIGO DE BARRA","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            t_cod_barra.requestFocus();
+        }else if (p.equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE PRODUCTO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            t_producto.requestFocus();
+        }else if (prc.equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE PRECIO COMPRA","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            t_precio_compra.requestFocus();
+        }else if (prv.equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE PRECIO VENTA","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            t_precio_venta.requestFocus();
+        }else if (s.equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE STOCK","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            t_stock.requestFocus();
+        }else if (rb_si.isSelected()==false&&rb_no.isSelected()==false) {
+            JOptionPane.showMessageDialog(this, "SELECCIONE ACTIVIDAD","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+        }
+        else if (rb_iva5.isSelected()==false&&rb_iva10.isSelected()==false&&rb_exentas.isSelected()==false) {
+            JOptionPane.showMessageDialog(this, "SELECCIONE VALOR","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
         }else{
             modificar_registro();
             nuevo_registro();

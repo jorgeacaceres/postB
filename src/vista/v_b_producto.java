@@ -5,6 +5,7 @@ import controlador.conexion;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import modelo.m_producto;
 
 public class v_b_producto extends javax.swing.JInternalFrame {
     public static String i_b_producto;
+     DecimalFormat fd = new DecimalFormat("#,##0");
     public v_b_producto() {
         initComponents();
         int a = principal.dp_principal.getWidth()-this.getWidth();
@@ -43,9 +45,10 @@ public class v_b_producto extends javax.swing.JInternalFrame {
         for(m_producto mp : verCodigo){
            tbm.addRow(new String[1]);
            t_product.setValueAt(mp.getCodigo(), i, 0);
-           t_product.setValueAt(mp.getProducto(), i, 1);
-           t_product.setValueAt(mp.getPrecio_venta().intValue(), i, 2);
-           t_product.setValueAt(mp.getStock(), i, 3);
+           t_product.setValueAt(mp.getCod_barra(), i, 1);
+           t_product.setValueAt(mp.getProducto(), i, 2);
+           t_product.setValueAt(fd.format(mp.getPrecio_venta()), i, 3);
+           t_product.setValueAt(mp.getStock(), i, 4);
            i++;
            }
             conexion.cerrarConexion(con);  
@@ -65,9 +68,10 @@ public class v_b_producto extends javax.swing.JInternalFrame {
         for(m_producto mp : listar){
            tbm.addRow(new String[1]);
            t_product.setValueAt(mp.getCodigo(), i, 0);
-           t_product.setValueAt(mp.getProducto(), i, 1);
-           t_product.setValueAt(mp.getPrecio_venta().intValue(), i, 2);
-           t_product.setValueAt(mp.getStock(), i, 3);
+           t_product.setValueAt(mp.getCod_barra(), i, 1);
+           t_product.setValueAt(mp.getProducto(), i, 2);
+           t_product.setValueAt(fd.format(mp.getPrecio_venta()), i, 3);
+           t_product.setValueAt(mp.getStock(), i, 4);
            i++;
            }
             conexion.cerrarConexion(con);  
@@ -82,11 +86,15 @@ public class v_b_producto extends javax.swing.JInternalFrame {
         t_product.getColumnModel().getColumn(1).setCellRenderer(r); 
         t_product.getColumnModel().getColumn(2).setCellRenderer(r); 
         t_product.getColumnModel().getColumn(3).setCellRenderer(r);
+        t_product.getColumnModel().getColumn(4).setCellRenderer(r);
         t_product.setAutoResizeMode(t_product.AUTO_RESIZE_OFF);   
-        t_product.getColumnModel().getColumn(0).setPreferredWidth(70);
-        t_product.getColumnModel().getColumn(1).setPreferredWidth(240);
-        t_product.getColumnModel().getColumn(2).setPreferredWidth(100);
-        t_product.getColumnModel().getColumn(3).setPreferredWidth(70);
+        t_product.getColumnModel().getColumn(0).setMinWidth(0);
+        t_product.getColumnModel().getColumn(0).setMaxWidth(0);
+        t_product.getColumnModel().getColumn(0).setPreferredWidth(0);
+        t_product.getColumnModel().getColumn(1).setPreferredWidth(150);
+        t_product.getColumnModel().getColumn(2).setPreferredWidth(288);
+        t_product.getColumnModel().getColumn(3).setPreferredWidth(100);
+        t_product.getColumnModel().getColumn(4).setPreferredWidth(60);
         t_product.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
@@ -115,6 +123,7 @@ public class v_b_producto extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("ARTICULO                     ");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -141,7 +150,7 @@ public class v_b_producto extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "CODIGO", "ARTICULO", "PRECIO VENTA", "STOCK"
+                "CODIGO", "COD BARRA", "ARTICULO", "PRECIO", "STOCK"
             }
         ));
         jScrollPane1.setViewportView(t_product);
@@ -163,16 +172,15 @@ public class v_b_producto extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(t_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(t_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,8 +200,8 @@ public class v_b_producto extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

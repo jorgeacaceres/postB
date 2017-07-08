@@ -3,8 +3,13 @@ package vista;
 import controlador.*;
 import java.awt.Font;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -16,6 +21,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.m_producto;
 import modelo.m_usuario;
+import static vista.v_c_password.i_cambiarp;
+import static vista.v_compra.i_compra;
+import static vista.v_m_producto.i_producto;
+import static vista.v_venta.i_venta;
 
 public class v_usuario extends javax.swing.JInternalFrame {
 
@@ -91,11 +100,10 @@ public class v_usuario extends javax.swing.JInternalFrame {
         int i = 0;
         for (m_usuario mc : verUsuario) {
             tbm.addRow(new String[1]);
-            t_usuario.setValueAt(mc.getId(), i, 0);
-            t_usuario.setValueAt(mc.getUsuario(), i, 1);
-            t_usuario.setValueAt(mc.getContraseña(), i, 2);
-            t_usuario.setValueAt(mc.getActivo(), i, 3);
-            t_usuario.setValueAt(mc.getTipo(), i, 4);
+            t_usuario.setValueAt(mc.getUsuario(), i, 0);
+            t_usuario.setValueAt(mc.getContraseña(), i, 1);
+            t_usuario.setValueAt(mc.getActivo(), i, 2);
+            t_usuario.setValueAt(mc.getTipo(), i, 3);
             i++;
         }
 
@@ -115,11 +123,10 @@ public class v_usuario extends javax.swing.JInternalFrame {
         int i = 0;
         for (m_usuario mu : listar) {
             tbm.addRow(new String[1]);
-            t_usuario.setValueAt(mu.getId(), i, 0);
-            t_usuario.setValueAt(mu.getUsuario(), i, 1);
-            t_usuario.setValueAt(mu.getContraseña(), i, 2);
-            t_usuario.setValueAt(mu.getActivo(), i, 3);
-            t_usuario.setValueAt(mu.getTipo(), i, 4);
+            t_usuario.setValueAt(mu.getUsuario(), i, 0);
+            t_usuario.setValueAt(mu.getContraseña(), i, 1);
+            t_usuario.setValueAt(mu.getActivo(), i, 2);
+            t_usuario.setValueAt(mu.getTipo(), i, 3);
             i++;
         }
         conexion.cerrarConexion(con);
@@ -132,78 +139,52 @@ public class v_usuario extends javax.swing.JInternalFrame {
         DefaultTableCellRenderer r = new DefaultTableCellRenderer();
         r.setHorizontalAlignment(SwingConstants.CENTER);
         t_usuario.getColumnModel().getColumn(0).setCellRenderer(r);
-        t_usuario.getColumnModel().getColumn(1).setCellRenderer(r);
-        t_usuario.getColumnModel().getColumn(3).setCellRenderer(r);
-        t_usuario.getColumnModel().getColumn(4).setCellRenderer(r);
-        
+        t_usuario.getColumnModel().getColumn(2).setCellRenderer(r);
+        t_usuario.getColumnModel().getColumn(3).setCellRenderer(r);       
         t_usuario.setAutoResizeMode(t_usuario.AUTO_RESIZE_OFF);
-        t_usuario.getColumnModel().getColumn(0).setPreferredWidth(60);
-        t_usuario.getColumnModel().getColumn(1).setPreferredWidth(150);
-        t_usuario.getColumnModel().getColumn(2).setMaxWidth(0);
-        t_usuario.getColumnModel().getColumn(2).setMinWidth(0);
-        t_usuario.getColumnModel().getColumn(2).setPreferredWidth(0);
-        t_usuario.getColumnModel().getColumn(3).setPreferredWidth(90);
-        t_usuario.getColumnModel().getColumn(4).setPreferredWidth(170);
+        t_usuario.getColumnModel().getColumn(0).setPreferredWidth(180);
+        t_usuario.getColumnModel().getColumn(1).setMaxWidth(0);
+        t_usuario.getColumnModel().getColumn(1).setMinWidth(0);
+        t_usuario.getColumnModel().getColumn(1).setPreferredWidth(0);
+        t_usuario.getColumnModel().getColumn(2).setPreferredWidth(100);
+        t_usuario.getColumnModel().getColumn(3).setPreferredWidth(200);
         t_usuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
-    private void modificar_registro() {
-        String activo_ = "", tipo_ = "";
-        Connection con = conexion.abrirConexion();
-        m_usuario u = new m_usuario();
-        c_usuario c = new c_usuario(con);
-        u.setUsuario(tf_usu.getText());
-        u.setContraseña(tf_contraseña.getText());
-        if (rb_si.isSelected() == true) {
-            activo_ = "SI";
-        } else if (rb_no.isSelected() == true) {
-            activo_ = "NO";
-        }
-        if (rb_admin.isSelected() == true) {
-            tipo_ = "ADMINISTRADOR";
-        } else if (rb_invitado.isSelected() == true) {
-            tipo_ = "INVITADO";
-        }
-        u.setActivo(activo_);
-        u.setTipo(tipo_);
-        u.setId(Integer.parseInt(tf_codigo.getText()));
-        c.modificar(u);
-        conexion.cerrarConexion(con);
-    }
-
-    private void setear() {
-        //JOptionPane.showMessageDialog(null, "doble click");
-        DefaultTableModel tbm;
-        int index = t_usuario.getSelectedRow();
+    
+    private void acceder(String usuario, String pass)
+    {
+       Connection con = conexion.abrirConexion();
+       String tipo="";
+       String sql="SELECT * FROM usuario WHERE usuario='"+usuario+"' AND contra='"+pass+"'";
         try {
-            String codigo, usuario, contraseña, activo, tipo;
-            if (index == -1) {
-                JOptionPane.showMessageDialog(this, "SELECCIONE UN PRODUCTO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            } else {
-                tbm = (DefaultTableModel) t_usuario.getModel();
-                codigo = t_usuario.getValueAt(index, 0).toString();
-                usuario = t_usuario.getValueAt(index, 1).toString();
-                contraseña = t_usuario.getValueAt(index, 2).toString();
-                activo = t_usuario.getValueAt(index, 3).toString();
-                tipo = t_usuario.getValueAt(index, 4).toString();
-                
-                if (activo.equals("SI")) {
-                    rb_si.setSelected(true);
-                }else if (activo.equals("NO")) {
-                    rb_no.setSelected(true);
-                }
-                if (tipo.equals("ADMINISTRADOR")) {
-                    rb_admin.setSelected(true);
-                }else if (tipo.equals("INVITADO")) {
-                    rb_invitado.setSelected(true);
-                }
-                tf_codigo.setText(codigo);
-                tf_usu.setText(usuario);
-                tf_contraseña.setText(contraseña);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next())
+            {
+                tipo=rs.getString("tipo");
             }
-        } catch (Exception e) {
+            if(tipo.equals("ADMINISTRADOR"))
+            {
+                agregar_registro();
+                txt_usu.setText("");
+                txt_pass.setText("");
+                validacion.dispose();
+                nuevo_registro();
+                ver_datos();
+            }
+            if(tipo.equals("INVITADO"))
+            {
+               JOptionPane.showMessageDialog(null, "PERMISO DENEGADO", "ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+               
+            }
+            if((!tipo.equals("ADMINISTRADOR"))&& (!tipo.equals("INVITADO")))
+            {
+                JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INCORRECTA ","ATENCION",JOptionPane.ERROR_MESSAGE); 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(v_sesion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.t_usuario.requestFocus();
+        conexion.cerrarConexion(con);
     }
 
     @SuppressWarnings("unchecked")
@@ -212,6 +193,13 @@ public class v_usuario extends javax.swing.JInternalFrame {
 
         bg_tipo = new javax.swing.ButtonGroup();
         bg_activo = new javax.swing.ButtonGroup();
+        validacion = new javax.swing.JDialog();
+        txt_usu = new javax.swing.JTextField();
+        txt_pass = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btn_cancelar = new javax.swing.JButton();
+        btn_aceptar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -240,9 +228,65 @@ public class v_usuario extends javax.swing.JInternalFrame {
         tf_busqueda = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        jLabel1.setText("Usuario");
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        jLabel8.setText("Contraseña");
+
+        btn_cancelar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_cancelar.setText("Cancelar");
+
+        btn_aceptar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_aceptar.setText("Aceptar");
+        btn_aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aceptarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout validacionLayout = new javax.swing.GroupLayout(validacion.getContentPane());
+        validacion.getContentPane().setLayout(validacionLayout);
+        validacionLayout.setHorizontalGroup(
+            validacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(validacionLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(validacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(validacionLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(validacionLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_usu, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(validacionLayout.createSequentialGroup()
+                        .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_aceptar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        validacionLayout.setVerticalGroup(
+            validacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(validacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(validacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_usu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(validacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(validacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cancelar)
+                    .addComponent(btn_aceptar))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
         setClosable(true);
         setIconifiable(true);
-        setTitle("USUARIOS");
+        setTitle("USUARIO");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -397,7 +441,7 @@ public class v_usuario extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "COD", "USUARIO", "CONTRASEÑA", "ACTIVO", "TIPO"
+                "USUARIO", "CONTRASEÑA", "ACTIVO", "TIPO"
             }
         ));
         t_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -489,9 +533,11 @@ public class v_usuario extends javax.swing.JInternalFrame {
         }else if (rb_admin.isSelected()==false&&rb_invitado.isSelected()==false) {
             JOptionPane.showMessageDialog(this, "SELECCIONE TIPO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
         }else{
-            agregar_registro();
-            nuevo_registro();
-            ver_datos();
+            validacion.setSize(230,165);
+            validacion.setLocationRelativeTo(null);
+            validacion.setModal(true);
+            validacion.setVisible(true);
+            validacion.pack(); 
         }
     }//GEN-LAST:event_b_agregarActionPerformed
 
@@ -505,30 +551,42 @@ public class v_usuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tf_busquedaKeyReleased
 
     private void t_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_usuarioMouseClicked
-        t_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-        if(e.getClickCount()==2){
-            setear();
-            b_agregar.setEnabled(false);
-        }}
-       });                
+           
     }//GEN-LAST:event_t_usuarioMouseClicked
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         nuevo_registro();
     }//GEN-LAST:event_formInternalFrameActivated
 
+    private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
+        String usu=txt_usu.getText().trim();
+        String pas=new String(txt_pass.getPassword()).trim();
+        if (usu.equals("")==true&&pas.equals("")==true) {
+            JOptionPane.showMessageDialog(this, "COMPLETE LOS DATOS","ATENCION",JOptionPane.WARNING_MESSAGE);
+        }else if (usu.equals("")==true) {
+            JOptionPane.showMessageDialog(this, "INGRESE USUARIO","ATENCION",JOptionPane.WARNING_MESSAGE);;
+        }else if (pas.equals("")==true) {
+            JOptionPane.showMessageDialog(this, "INGRESE CONTRASEÑA","ATENCION",JOptionPane.WARNING_MESSAGE);;
+        }else{
+            acceder(usu, pas);
+        }
+    }//GEN-LAST:event_btn_aceptarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_agregar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.ButtonGroup bg_activo;
     private javax.swing.ButtonGroup bg_tipo;
+    private javax.swing.JButton btn_aceptar;
+    private javax.swing.JButton btn_cancelar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -541,5 +599,8 @@ public class v_usuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tf_codigo;
     private javax.swing.JPasswordField tf_contraseña;
     private javax.swing.JTextField tf_usu;
+    private javax.swing.JPasswordField txt_pass;
+    private javax.swing.JTextField txt_usu;
+    private javax.swing.JDialog validacion;
     // End of variables declaration//GEN-END:variables
 }

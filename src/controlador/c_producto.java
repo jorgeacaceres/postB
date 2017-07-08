@@ -59,7 +59,7 @@ public class c_producto {
     public java.util.List<m_producto> listar() {
     String sql = "SELECT codigo, cod_barra, nombre, precio_compra, precio_venta,"
             + "stock, iva, activo "
-            + "FROM producto ORDER BY codigo desc";
+            + "FROM producto";
     java.util.List<m_producto> listar = new ArrayList<m_producto>();
     try {
       PreparedStatement ps = getConn().prepareStatement(sql);

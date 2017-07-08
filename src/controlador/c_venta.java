@@ -48,6 +48,8 @@ public class c_venta {
         }
     }
     
+    
+    
     public java.util.List<m_venta> maxCodigo(m_venta ventas) {
     String sql = ("SELECT COALESCE (MAX (id),0)+1 FROM venta");
     java.util.List<m_venta> mxCodigo = new ArrayList<m_venta>();

@@ -507,7 +507,7 @@ public class v_compra extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "COD", "COD BARRA", "ARTICULO", "CANTIDAD", "P. COMPRA"
+                "COD", "COD BARRA", "ARTICULO", "CANTIDAD", "PRE. COMPRA"
             }
         ));
         jScrollPane1.setViewportView(t_compra);
@@ -599,7 +599,7 @@ public class v_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_buscarKeyReleased
 
     private void t_buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_buscarKeyTyped
-            char tecla=evt.getKeyChar();
+        char tecla=evt.getKeyChar();
         if(tecla==KeyEvent.VK_ENTER){
            if(t_filtro.getRowCount()>1){
                 JOptionPane.showMessageDialog(null,"SELECCIONE ARTICULO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);

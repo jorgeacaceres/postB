@@ -121,11 +121,13 @@ public class v_cliente extends javax.swing.JInternalFrame {
         t_cliente.getColumnModel().getColumn(1).setCellRenderer(r);    
         t_cliente.getColumnModel().getColumn(2).setCellRenderer(r);
         t_cliente.getColumnModel().getColumn(3).setCellRenderer(r);
-        t_cliente.setAutoResizeMode(t_cliente.AUTO_RESIZE_OFF);   
-        t_cliente.getColumnModel().getColumn(0).setPreferredWidth(40);
-        t_cliente.getColumnModel().getColumn(1).setPreferredWidth(100);
-        t_cliente.getColumnModel().getColumn(2).setPreferredWidth(250);
-        t_cliente.getColumnModel().getColumn(3).setPreferredWidth(120);
+        t_cliente.setAutoResizeMode(t_cliente.AUTO_RESIZE_OFF); 
+        t_cliente.getColumnModel().getColumn(0).setMaxWidth(0);
+        t_cliente.getColumnModel().getColumn(0).setMinWidth(0);
+        t_cliente.getColumnModel().getColumn(0).setPreferredWidth(0);
+        t_cliente.getColumnModel().getColumn(1).setPreferredWidth(120);
+        t_cliente.getColumnModel().getColumn(2).setPreferredWidth(247);
+        t_cliente.getColumnModel().getColumn(3).setPreferredWidth(130);
         t_cliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     private void modificar_registro(){
@@ -196,7 +198,7 @@ public class v_cliente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("CLIENTES");
+        setTitle("CLIENTE");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -408,12 +410,16 @@ public class v_cliente extends javax.swing.JInternalFrame {
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
         if(tf_ci_ruc.getText().equals("")&&tf_nombre_razon.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
         }else if(tf_ci_ruc.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE CI/RUC","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
         }else if(tf_nombre_razon.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE NOMBRE/RAZON","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_nombre_razon.requestFocus();
         }else if(tf_telefono.getText().equals("")){
             JOptionPane.showMessageDialog(this, "INGRESE TELEFONO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_telefono.requestFocus();
         }else{     
             agregar_registro();
             nuevo_registro();
@@ -431,11 +437,25 @@ public class v_cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tf_busquedaKeyReleased
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
-       modificar_registro();
-       nuevo_registro();
-       ver_datos();
-       b_agregar.setEnabled(true);
-       b_modificar.setEnabled(false);
+         if(tf_ci_ruc.getText().equals("")&&tf_nombre_razon.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE LOS DATOS","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
+        }else if(tf_ci_ruc.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE CI/RUC","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_ci_ruc.requestFocus();
+        }else if(tf_nombre_razon.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE NOMBRE/RAZON","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_nombre_razon.requestFocus();
+        }else if(tf_telefono.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "INGRESE TELEFONO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+            tf_telefono.requestFocus();
+        }else{     
+            modificar_registro();
+            nuevo_registro();
+            ver_datos();
+            b_agregar.setEnabled(true);
+            b_modificar.setEnabled(false);
+        }
     }//GEN-LAST:event_b_modificarActionPerformed
 
     private void t_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_clienteMouseClicked
