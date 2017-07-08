@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.m_producto;
+import static vista.v_compra.tf_usuario;
+import static vista.v_venta.tf_usuario;
 
 public class v_m_producto extends javax.swing.JInternalFrame {
     JTextField[] textfields;
@@ -30,6 +32,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
     public static String i_producto;
     public v_m_producto() {
         initComponents();
+        tf_usuario.setVisible(false);
         t_codigo.setVisible(false);
         int a = principal.dp_principal.getWidth()-this.getWidth();
         int b = principal.dp_principal.getHeight()-this.getHeight();
@@ -50,7 +53,18 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         Connection con = conexion.abrirConexion();
         m_producto p = new m_producto();
         c_producto c = new c_producto(con);
-      
+        String usuario="";
+        Integer u=0;
+        try { 
+                    usuario=tf_usuario.getText();
+                    Statement s1 = null;
+                    ResultSet r1 = null;
+                    s1 = con.createStatement();
+                    r1 = s1.executeQuery("SELECT id FROM usuario WHERE usuario = '"+usuario+"';");
+                    while (r1.next()){
+                        u=r1.getInt(1);
+                    } 
+        }catch(SQLException e){}
          
         if (rb_si.isSelected()==true) {
             activo="SI";
@@ -78,6 +92,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
 
         p.setIva(iva); 
         p.setActivo(activo);
+        p.setUsuario(u);
         c.agregar(p);
         conexion.cerrarConexion(con);
     }
@@ -475,6 +490,8 @@ public class v_m_producto extends javax.swing.JInternalFrame {
             }
         });
 
+        tf_usuario.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -509,19 +526,27 @@ public class v_m_producto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(t_stock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                                .addComponent(t_precio_venta, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(t_precio_compra, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(t_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rb_si)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rb_no))
-                            .addComponent(t_cod_barra, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addComponent(t_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                                .addComponent(t_cod_barra, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(t_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(t_stock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                            .addComponent(t_precio_venta, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(t_precio_compra, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(123, 123, 123))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(t_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(rb_si)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(rb_no))))
+                                .addComponent(tf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(b_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(b_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -555,7 +580,8 @@ public class v_m_producto extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(t_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(tf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(t_precio_compra, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -869,5 +895,6 @@ public class v_m_producto extends javax.swing.JInternalFrame {
     private javax.swing.JTable t_product;
     private javax.swing.JTextField t_producto;
     public static final javax.swing.JTextField t_stock = new javax.swing.JTextField();
+    public static final javax.swing.JTextField tf_usuario = new javax.swing.JTextField();
     // End of variables declaration//GEN-END:variables
 }

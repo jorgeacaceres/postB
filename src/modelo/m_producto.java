@@ -11,6 +11,7 @@ public class m_producto {
     private Integer iva;
     private String activo;
     private String cod_barra;
+    private Integer usuario;
 
     public Integer getCodigo() {
         return codigo;
@@ -74,5 +75,13 @@ public class m_producto {
 
     public void setCod_barra(String cod_barra) {
         this.cod_barra = cod_barra;
+    }
+
+    public Integer getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Integer usuario) {
+        this.usuario = usuario;
     }
 }

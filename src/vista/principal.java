@@ -62,8 +62,11 @@ public class principal extends javax.swing.JFrame {
         jm_venta = new javax.swing.JMenuItem();
         m_busqueda = new javax.swing.JMenu();
         jm_b_producto = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         m_reporte = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         jm_stock = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jm_compra_r = new javax.swing.JMenuItem();
         jm_b_venta = new javax.swing.JMenuItem();
 
@@ -202,11 +205,23 @@ public class principal extends javax.swing.JFrame {
         });
         m_busqueda.add(jm_b_producto);
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/la-lucha-contra-la-caja-registradora-icono-4028-32.png"))); // NOI18N
+        jMenuItem1.setText("VENTA");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        m_busqueda.add(jMenuItem1);
+
         mb_principal.add(m_busqueda);
 
         m_reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/SEO-icon.png"))); // NOI18N
         m_reporte.setText("Reportes");
         m_reporte.setEnabled(false);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/favoritos-bebidas-texto-web20-icono-6059-32.png"))); // NOI18N
+        jMenu1.setText("PRODUCTO");
 
         jm_stock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/favoritos-bebidas-texto-web20-icono-6059-32.png"))); // NOI18N
         jm_stock.setText("STOCK");
@@ -215,7 +230,13 @@ public class principal extends javax.swing.JFrame {
                 jm_stockActionPerformed(evt);
             }
         });
-        m_reporte.add(jm_stock);
+        jMenu1.add(jm_stock);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/favoritos-bebidas-texto-web20-icono-6059-32.png"))); // NOI18N
+        jMenuItem2.setText("PRODUCTO");
+        jMenu1.add(jMenuItem2);
+
+        m_reporte.add(jMenu1);
 
         jm_compra_r.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/anadir-carrito-de-la-tienda-en-linea-de-comercio-electronico-icono-7379-32.png"))); // NOI18N
         jm_compra_r.setText("COMPRA");
@@ -358,9 +379,9 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_cerrar_sesionActionPerformed
 
     private void jm_compra_rActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_compra_rActionPerformed
-         String compra_fecha = v_b_compra.i_compra_fecha;
+         String compra_fecha = v_r_compra.i_compra_fecha;
         if (compra_fecha==null) {
-             v_b_compra cc = new v_b_compra();
+             v_r_compra cc = new v_r_compra();
             dp_principal.add(cc);
             cc.show();
         }else{
@@ -371,9 +392,9 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_compra_rActionPerformed
 
     private void jm_b_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_b_ventaActionPerformed
-         String venta_fecha = v_b_venta.i_venta_fecha;
+         String venta_fecha = v_r_venta.i_venta_fecha;
         if (venta_fecha==null) {
-             v_b_venta vv = new v_b_venta();
+             v_r_venta vv = new v_r_venta();
             dp_principal.add(vv);
             vv.show();
         }else{
@@ -409,6 +430,17 @@ public class principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
         }
     }//GEN-LAST:event_jm_cambiar_passwordActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String venta_b = v_b_venta.i_b_venta;
+        if (venta_b==null) {
+            v_b_venta vb = new v_b_venta();
+            dp_principal.add(vb);
+            vb.show();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -446,6 +478,9 @@ public class principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane dp_principal;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jm_b_producto;
     private javax.swing.JMenuItem jm_b_venta;
     private javax.swing.JMenuItem jm_cambiar_password;

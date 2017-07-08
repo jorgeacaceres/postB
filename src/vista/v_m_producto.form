@@ -115,22 +115,35 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="t_stock" alignment="0" pref="115" max="32767" attributes="0"/>
-                                  <Component id="t_precio_venta" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="t_precio_compra" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="t_cod_barra" pref="257" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="t_codigo" min="-2" pref="17" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="t_producto" alignment="0" min="-2" pref="238" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="rb_si" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="rb_no" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="t_stock" alignment="0" pref="115" max="32767" attributes="0"/>
+                                              <Component id="t_precio_venta" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="t_precio_compra" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="t_producto" alignment="0" min="-2" pref="238" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="rb_si" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="rb_no" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Component id="tf_usuario" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="t_cod_barra" alignment="0" pref="251" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="19" max="32767" attributes="0"/>
-                          <Component id="t_codigo" min="-2" pref="17" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="b_modificar" max="32767" attributes="0"/>
                               <Component id="b_nuevo" alignment="0" max="32767" attributes="0"/>
@@ -174,6 +187,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="t_producto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tf_usuario" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -421,6 +435,14 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="t_cod_barraKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="t_cod_barraKeyTyped"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="tf_usuario">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="25"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

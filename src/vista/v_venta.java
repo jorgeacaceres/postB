@@ -488,11 +488,9 @@ public class v_venta extends javax.swing.JInternalFrame {
                             f_10=tbm.getValueAt(i, 7).toString();
                             t_iva10=t_iva10+Integer.parseInt(f_10);
                         }
-                        
                         tf_exentas.setText(String.valueOf(t_exe));
                         tf_iva_5.setText(String.valueOf(t_iva5));
-                        tf_iva_10.setText(String.valueOf(t_iva10));
-                        
+                        tf_iva_10.setText(String.valueOf(t_iva10));       
                         total=Double.parseDouble(tf_exentas.getText())+Double.parseDouble(tf_iva_5.getText())+Double.parseDouble(tf_iva_10.getText());
                         tf_total.setText(fd.format(total));
                         lbl_total_pagar.setText(fd_total.format(total));
@@ -1323,7 +1321,7 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addGap(149, 149, 149))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TOTAL A PAGA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 11))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TOTAL FACTURA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 11))); // NOI18N
 
         lbl_total_pagar.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
         lbl_total_pagar.setForeground(new java.awt.Color(0, 0, 255));

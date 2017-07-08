@@ -71,6 +71,10 @@ public class v_sesion extends javax.swing.JFrame {
                    p.m_movimiento.setEnabled(true);
                    p.m_reporte.setEnabled(true); 
                    p.m_busqueda.setEnabled(true);
+                   
+                   v_m_producto pr = new v_m_producto();
+                   i_producto=null;
+                   pr.tf_usuario.setText(usuario);
             }
             if(tipo.equals("INVITADO"))
             {
@@ -94,6 +98,7 @@ public class v_sesion extends javax.swing.JFrame {
                    p.jm_usuario.setVisible(false);
                    v_m_producto pr = new v_m_producto();
                    i_producto=null;
+                   pr.tf_usuario.setText(usuario);
                    pr.t_stock.setEnabled(false);
             }
             if((!tipo.equals("ADMINISTRADOR"))&& (!tipo.equals("INVITADO")))

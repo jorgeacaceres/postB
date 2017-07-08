@@ -23,12 +23,12 @@ import modelo.m_r_venta;
 import net.sf.jasperreports.engine.JRException;
 import reporte.reporte;
 
-public class v_b_compra extends javax.swing.JInternalFrame {
+public class v_r_compra extends javax.swing.JInternalFrame {
     JTable tabla;
     ResultSet rs;
     public static String i_compra_fecha;
     DefaultTableModel tbm;
-    public v_b_compra() {
+    public v_r_compra() {
         initComponents();
         int a = principal.dp_principal.getWidth()-this.getWidth();
         int b = principal.dp_principal.getHeight()-this.getHeight();

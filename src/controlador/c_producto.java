@@ -31,9 +31,9 @@ public class c_producto {
         aceptar= new ImageIcon("src/graficos/aceptar.png");
         fail=new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
         String SQL ="INSERT INTO producto(codigo, nombre, precio_compra, "
-        +"precio_venta, stock, iva, activo, cod_barra)" 
+        +"precio_venta, stock, iva, activo, cod_barra,id_usuario)" 
         +"VALUES (?, ?, ?, "
-        + "?, ?, ?, ?, ?);";
+        + "?, ?, ?, ?, ?, ?);";
         try {
             PreparedStatement ps = getConn().prepareStatement(SQL); 
             ps.setInt(1, productos.getCodigo());
@@ -44,6 +44,7 @@ public class c_producto {
             ps.setInt(6, productos.getIva());
             ps.setString(7, productos.getActivo());
             ps.setString(8, productos.getCod_barra());
+            ps.setInt(9, productos.getUsuario());
             if (ps.executeUpdate() > 0) {  
                 JOptionPane.showMessageDialog(null, "AGREGADO","ATENCION",JOptionPane.WARNING_MESSAGE,aceptar);
                 return "Agregado el registro.";
