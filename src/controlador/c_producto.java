@@ -144,7 +144,7 @@ public class c_producto {
       fail=new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
       String sql = "UPDATE producto "           
                 +"SET cod_barra=?, nombre=?, precio_compra=?, precio_venta=?, " 
-                +"stock=?, iva=?, activo=?" 
+                +"stock=?, iva=?, activo=?, id_usuario=?" 
                 +"WHERE codigo=?;";
       try {
           PreparedStatement ps = getConn().prepareStatement(sql);
@@ -155,7 +155,8 @@ public class c_producto {
           ps.setInt(5, productos.getStock());
           ps.setInt(6, productos.getIva());
           ps.setString(7, productos.getActivo());
-          ps.setInt(8, productos.getCodigo());
+          ps.setInt(8, productos.getUsuario());
+          ps.setInt(9, productos.getCodigo());
           if (ps.executeUpdate() > 0) {
              JOptionPane.showMessageDialog(null, "MODIFICADO","ATENCION",JOptionPane.WARNING_MESSAGE,aceptar);
              return "registro modificado";

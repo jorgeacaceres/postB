@@ -234,6 +234,11 @@ public class principal extends javax.swing.JFrame {
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/favoritos-bebidas-texto-web20-icono-6059-32.png"))); // NOI18N
         jMenuItem2.setText("PRODUCTO");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         m_reporte.add(jMenu1);
@@ -441,6 +446,20 @@ public class principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+          try {
+            reporte  reportes = new reporte();
+            reportes.reporte_productos();
+        } catch (JRException e) {
+            java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
+
+        }
+        catch (SQLException e) {
+            java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
+
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

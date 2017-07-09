@@ -1,28 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17cb2240-a382-46c9-b77b-c6df41820530">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="31"/>
 	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT p.nombre, p.precio_compra, p.precio_venta, p.stock, p.iva, p.activo, 
+       p.cod_barra, p.tipo_operacion, p.fecha_auditoria, p.hora_auditoria, u.usuario
+FROM auditoria.producto p
+LEFT JOIN usuario u
+ON u.id=p.usuario
+ORDER BY p.id DESC;]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="precio_compra" class="java.lang.Double"/>
+	<field name="precio_venta" class="java.lang.Double"/>
+	<field name="stock" class="java.lang.Integer"/>
+	<field name="iva" class="java.lang.Integer"/>
+	<field name="activo" class="java.lang.String"/>
+	<field name="cod_barra" class="java.lang.String"/>
+	<field name="tipo_operacion" class="java.lang.String"/>
+	<field name="fecha_auditoria" class="java.sql.Date"/>
+	<field name="hora_auditoria" class="java.sql.Time"/>
+	<field name="usuario" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="329" y="4" width="142" height="41" uuid="5af8394a-8524-4ec6-9fd3-6129a04c6837"/>
+				<textElement>
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Productos]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="21" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="73" y="0" width="195" height="20" uuid="81e739bd-fe69-4897-8f79-fb9d9650150a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Articulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="84" height="20" uuid="396d007a-d171-4880-b984-b8f6d08d4931"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cod. Barra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="0" width="71" height="20" uuid="a62394c7-5dc4-4595-86d0-78dccac28780"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Pre. Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="0" width="71" height="20" uuid="dc0cea46-2e6a-4eab-aba6-6cb359928823"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Pre. Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="494" y="0" width="44" height="20" uuid="34a7254c-7652-4151-a018-bd561f528292"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="0" width="26" height="20" uuid="2e898fe9-6048-4231-a580-628b14c309bf"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="0" width="70" height="20" uuid="8f44cf48-b1c2-4be0-9484-38e4bbc52084"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tipo Operacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="564" y="0" width="30" height="20" uuid="1abc99ca-8942-4b54-81bc-a8cc791fdf44"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Activo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="594" y="0" width="115" height="20" uuid="5305451c-94b5-4305-969c-e6ffc6673f98"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="709" y="0" width="42" height="20" uuid="0003678d-e111-459c-bef3-e5aaa11247a6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="751" y="0" width="51" height="20" uuid="c253b01a-8c6a-42e4-90bc-231d3d0ec647"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="73" y="0" width="195" height="20" uuid="9357d994-943d-4790-bbd3-2d9bc7f0d6a6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="84" height="20" uuid="8f2cce9e-b5bb-46b2-a544-76055d82f3b7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cod_barra}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="352" y="0" width="71" height="20" uuid="ae8f166b-5824-4cc4-9d8b-9e2c85f4f1d8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{precio_compra}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="423" y="0" width="71" height="20" uuid="43111e23-7bfd-4423-b43e-b2cd510bac52"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{precio_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="0" width="44" height="20" uuid="1b1eddda-08b7-457a-b66d-3de0974f99b9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="0" width="26" height="20" uuid="73a13fac-3f72-459c-906c-cda4533c9fce"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="0" width="70" height="20" uuid="ee0cb747-abe8-4c91-b720-ec4c3c91d230"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipo_operacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="564" y="0" width="30" height="20" uuid="fa780b3f-16f9-4ef8-a485-6c3664c1b7d7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{activo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="594" y="0" width="115" height="20" uuid="53ec7b05-af46-4666-a9c7-54c244db3f4e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_auditoria}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="709" y="0" width="42" height="20" uuid="22d17f79-9bff-4d4f-b257-97c41ed552c6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{hora_auditoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="751" y="0" width="51" height="20" uuid="f11f1f3d-753a-4cce-9ad9-7448959ddeb2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="14" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

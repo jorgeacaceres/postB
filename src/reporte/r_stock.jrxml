@@ -11,6 +11,7 @@
      producto."precio_venta" AS producto_precio_venta,
      producto."stock" AS producto_stock,
      producto."iva" AS producto_iva,
+     producto."cod_barra" AS producto_codigo_barra,
      producto."activo" AS producto_activo
 FROM
      "public"."producto" producto
@@ -22,12 +23,13 @@ ORDER BY  producto."codigo"]]>
 	<field name="producto_precio_venta" class="java.lang.Double"/>
 	<field name="producto_stock" class="java.lang.Integer"/>
 	<field name="producto_iva" class="java.lang.Integer"/>
+	<field name="producto_codigo_barra" class="java.lang.String"/>
 	<field name="producto_activo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="74" splitType="Stretch">
 			<staticText>
 				<reportElement x="224" y="35" width="124" height="31" uuid="93947006-8067-47cd-8c73-78cb6280f9c1"/>
 				<textElement>
@@ -41,94 +43,92 @@ ORDER BY  producto."codigo"]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="23" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="61" height="20" uuid="c4f59506-9a83-466a-806d-12253096fbc2"/>
+				<reportElement x="81" y="0" width="159" height="20" uuid="ee81a581-f8fa-487b-b459-0e1bc2acd784"/>
 				<textElement textAlignment="Center">
-					<font size="14" isBold="false"/>
-				</textElement>
-				<text><![CDATA[CODIGO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="61" y="0" width="139" height="20" uuid="ee81a581-f8fa-487b-b459-0e1bc2acd784"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="false"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRODUCTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="0" width="68" height="20" uuid="bc5cc74a-3fe2-45ab-b014-56bff2e4e342"/>
+				<reportElement x="299" y="0" width="55" height="20" uuid="bc5cc74a-3fe2-45ab-b014-56bff2e4e342"/>
 				<textElement textAlignment="Center">
-					<font size="14"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ACTIVO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="340" y="0" width="100" height="20" uuid="4e74db40-d0ac-49c5-8619-fb2ef721ca58"/>
+				<reportElement x="354" y="0" width="100" height="20" uuid="4e74db40-d0ac-49c5-8619-fb2ef721ca58"/>
 				<textElement textAlignment="Center">
-					<font size="14"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRE. COMPRA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="72" height="20" uuid="1b642bc0-8f26-49df-b18b-17de4923cfa4"/>
+				<reportElement x="240" y="0" width="59" height="20" uuid="1b642bc0-8f26-49df-b18b-17de4923cfa4"/>
 				<textElement textAlignment="Center">
-					<font size="14" isBold="false"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[STOCK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="440" y="0" width="100" height="20" uuid="52725457-7501-4ba6-9848-3d62d94d249f"/>
+				<reportElement x="454" y="0" width="100" height="20" uuid="52725457-7501-4ba6-9848-3d62d94d249f"/>
 				<textElement textAlignment="Center">
-					<font size="14"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRE. VENTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="81" height="20" uuid="7ab826eb-b715-4783-9d97-f177f0c6753f"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD BARRA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField pattern="">
-				<reportElement x="0" y="0" width="61" height="20" uuid="832d95b4-9f22-4f66-9bdc-ed112b385869"/>
+				<reportElement x="299" y="0" width="55" height="20" uuid="322ba97d-a904-4564-9426-864b5772b1d8"/>
 				<textElement textAlignment="Center">
-					<font size="14" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{producto_codigo}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="272" y="0" width="68" height="20" uuid="322ba97d-a904-4564-9426-864b5772b1d8"/>
-				<textElement textAlignment="Center">
-					<font size="14"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{producto_activo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="200" y="0" width="72" height="20" uuid="3adb61aa-484c-4839-a99c-ae538481dd09"/>
+				<reportElement x="240" y="0" width="59" height="20" uuid="3adb61aa-484c-4839-a99c-ae538481dd09"/>
 				<textElement textAlignment="Center">
-					<font size="14" isBold="false"/>
+					<font size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{producto_stock}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="61" y="0" width="139" height="20" uuid="0cde4888-4711-4387-99a3-278be240d2a1"/>
+				<reportElement x="81" y="0" width="159" height="20" uuid="0cde4888-4711-4387-99a3-278be240d2a1"/>
 				<textElement textAlignment="Center">
-					<font size="14" isBold="false"/>
+					<font size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{producto_nombre}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="340" y="0" width="100" height="20" uuid="36c2e832-00ff-4098-9ebd-d24c23de48f9"/>
+				<reportElement x="354" y="0" width="100" height="20" uuid="36c2e832-00ff-4098-9ebd-d24c23de48f9"/>
 				<textElement textAlignment="Center">
-					<font size="14"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{producto_precio_compra}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="440" y="0" width="100" height="20" uuid="554b5aad-940e-458e-beec-da3fc3b95f49"/>
+				<reportElement x="454" y="0" width="100" height="20" uuid="554b5aad-940e-458e-beec-da3fc3b95f49"/>
 				<textElement textAlignment="Center">
-					<font size="14"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{producto_precio_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="81" height="20" uuid="b5037164-ca4f-4561-af2d-d548ac9e93d0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{producto_codigo_barra}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

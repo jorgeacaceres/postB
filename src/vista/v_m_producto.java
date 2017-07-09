@@ -266,8 +266,8 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         Connection con = conexion.abrirConexion();
         m_producto p = new m_producto();
         c_producto c = new c_producto(con);
-        Integer iva=0;
-        String activo_="";
+        Integer iva=0,u=0;
+        String activo_="",usuario="";
         p.setCod_barra(t_cod_barra.getText().trim());
         p.setProducto(t_producto.getText().trim().toUpperCase());
         p.setPrecio_compra(Double.parseDouble(t_precio_compra.getText().trim().toUpperCase()));
@@ -285,8 +285,19 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         }else if (rb_no.isSelected()==true) {
             activo_="NO";
         }
+        try { 
+                    usuario=tf_usuario.getText();
+                    Statement s1 = null;
+                    ResultSet r1 = null;
+                    s1 = con.createStatement();
+                    r1 = s1.executeQuery("SELECT id FROM usuario WHERE usuario = '"+usuario+"';");
+                    while (r1.next()){
+                        u=r1.getInt(1);
+                    } 
+        }catch(SQLException e){}
         p.setIva(iva);
         p.setActivo(activo_);
+        p.setUsuario(u);
         p.setCodigo(Integer.parseInt(t_codigo.getText()));
         c.modificar(p);
         conexion.cerrarConexion(con);
