@@ -41,6 +41,13 @@ order by v.f desc]]>
 				</textElement>
 				<text><![CDATA[VENTAS]]></text>
 			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="404" y="0" width="150" height="20" uuid="3560969b-69ae-4994-b9a9-f84e20b9e6fc"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

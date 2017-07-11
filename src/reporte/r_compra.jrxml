@@ -41,6 +41,13 @@ order by c.fecha desc]]>
 				</textElement>
 				<text><![CDATA[COMPRAS]]></text>
 			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="404" y="0" width="150" height="20" uuid="8bd4ced3-6dc7-481a-a0ae-8acece4bfc33"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

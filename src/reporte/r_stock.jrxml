@@ -37,6 +37,13 @@ ORDER BY  producto."codigo"]]>
 				</textElement>
 				<text><![CDATA[PRODUCTOS]]></text>
 			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="404" y="0" width="150" height="20" uuid="36fa2ad4-1736-43ce-b3f0-22ffea1181a8"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
