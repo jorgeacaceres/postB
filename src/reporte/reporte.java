@@ -19,7 +19,8 @@ public class reporte {
         Connection con = null;
         con=DriverManager.getConnection(_BDATOS,login,pasword);
         JasperReport reporte = null;
-        reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_stock.jasper");
+        reporte=(JasperReport) JRLoader.loadObjectFromFile("src\\reporte\\r_stock.jasper");
+        //reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_stock.jasper");
         JasperPrint print = JasperFillManager.fillReport(reporte, null, con);
         JasperViewer ver = new JasperViewer(print,false);
         ver.setExtendedState(MAXIMIZED_BOTH);
@@ -33,7 +34,8 @@ public class reporte {
         Connection con = null;
         con=DriverManager.getConnection(_BDATOS,login,pasword);
         JasperReport reporte = null;
-        reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_producto.jasper");
+        reporte=(JasperReport) JRLoader.loadObjectFromFile("src\\reporte\\r_producto.jasper");
+        //reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_producto.jasper");
         JasperPrint print = JasperFillManager.fillReport(reporte, null, con);
         JasperViewer ver = new JasperViewer(print,false);
         ver.setExtendedState(MAXIMIZED_BOTH);
@@ -47,7 +49,8 @@ public class reporte {
         Connection con = null;
         con=DriverManager.getConnection(_BDATOS,login,pasword);
         JasperReport reporte = null;
-        reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_compra.jasper");
+        reporte=(JasperReport) JRLoader.loadObjectFromFile("src\\reporte\\r_compra.jasper");
+        //reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_compra.jasper");
         JasperPrint print = JasperFillManager.fillReport(reporte, null, con);
         JasperViewer ver = new JasperViewer(print,false);
         ver.setExtendedState(MAXIMIZED_BOTH);
@@ -61,7 +64,8 @@ public class reporte {
         Connection con = null;
         con=DriverManager.getConnection(_BDATOS,login,pasword);
         JasperReport reporte = null;
-        reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_venta.jasper");
+        reporte=(JasperReport) JRLoader.loadObjectFromFile("src\\reporte\\r_venta.jasper");
+        //reporte=(JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\jck\\Documents\\NetBeansProjects\\bodega\\src\\reporte\\r_venta.jasper");
         JasperPrint print = JasperFillManager.fillReport(reporte, null, con);
         JasperViewer ver = new JasperViewer(print,false);
         ver.setExtendedState(MAXIMIZED_BOTH);
