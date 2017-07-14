@@ -37,8 +37,8 @@ ORDER BY  producto."codigo"]]>
 				</textElement>
 				<text><![CDATA[PRODUCTOS]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="404" y="0" width="150" height="20" uuid="36fa2ad4-1736-43ce-b3f0-22ffea1181a8"/>
+			<textField pattern="EEEE, d MMM yyyy HH:mm">
+				<reportElement x="389" y="0" width="165" height="20" uuid="36fa2ad4-1736-43ce-b3f0-22ffea1181a8"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>

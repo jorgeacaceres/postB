@@ -2,9 +2,7 @@
 package controlador;
 
 import javax.swing.JRadioButton;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 public class comunes {
     public static void limpiar_txt(JTextField[] textfields)

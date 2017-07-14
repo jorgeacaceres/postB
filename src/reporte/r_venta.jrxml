@@ -41,8 +41,8 @@ order by v.f desc]]>
 				</textElement>
 				<text><![CDATA[VENTAS]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="404" y="0" width="150" height="20" uuid="3560969b-69ae-4994-b9a9-f84e20b9e6fc"/>
+			<textField pattern="EEEE, d MMM yyyy HH:mm">
+				<reportElement x="389" y="0" width="165" height="20" uuid="3560969b-69ae-4994-b9a9-f84e20b9e6fc"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>

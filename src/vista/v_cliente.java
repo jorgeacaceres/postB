@@ -5,12 +5,12 @@ import controlador.c_cliente;
 import controlador.comunes;
 import controlador.conexion;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -18,7 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.m_cliente;
-import static vista.v_usuario.i_usuario;
 
 public class v_cliente extends javax.swing.JInternalFrame {
     public static String i_cliente;
@@ -143,7 +142,6 @@ public class v_cliente extends javax.swing.JInternalFrame {
     }
     
     private void setear(){
-     //JOptionPane.showMessageDialog(null, "doble click");
           DefaultTableModel tbm;  
           int index = t_cliente.getSelectedRow();
           try {
@@ -161,7 +159,7 @@ public class v_cliente extends javax.swing.JInternalFrame {
                   tf_nombre_razon.setText(nombre);
                   tf_telefono.setText(telefono);
               }
-          } catch (Exception e) {
+          } catch (HeadlessException e) {
           }
           this.t_cliente.requestFocus();
     }

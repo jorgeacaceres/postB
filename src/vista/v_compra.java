@@ -3,10 +3,9 @@ package vista;
 
 import controlador.c_compra;
 import controlador.c_producto;
-import controlador.comunes;
 import controlador.conexion;
 import java.awt.Font;
-import java.awt.JobAttributes;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,13 +66,13 @@ public class v_compra extends javax.swing.JInternalFrame {
             p.setProducto(t_buscar.getText().trim().toUpperCase());
             List<m_producto> verNombre = new ArrayList<m_producto>();
             verNombre=c.buscar(p);
-            DefaultTableModel tbm = (DefaultTableModel)t_filtro.getModel();
-        for(int i = tbm.getRowCount()-1; i >= 0; i--){
-            tbm.removeRow(i);
+            DefaultTableModel tbm_filtro = (DefaultTableModel)t_filtro.getModel();
+        for(int i = tbm_filtro.getRowCount()-1; i >= 0; i--){
+            tbm_filtro.removeRow(i);
             }
         int i = 0;
         for(m_producto mp : verNombre){
-           tbm.addRow(new String[1]);
+           tbm_filtro.addRow(new String[1]);
            t_filtro.setValueAt(mp.getCodigo(), i, 0);
            t_filtro.setValueAt(mp.getCod_barra(), i, 1);
            t_filtro.setValueAt(mp.getProducto(), i, 2);
@@ -93,14 +92,12 @@ public class v_compra extends javax.swing.JInternalFrame {
                 codigo=t_filtro.getValueAt(0, 0).toString();
                 cod_barra=t_filtro.getValueAt(0, 1).toString();
                 producto=t_filtro.getValueAt(0, 2).toString();
-                //stock=t_filtro.getValueAt(fselect, 2).toString();
                 precio_compra=t_filtro.getValueAt(0, 3).toString();
             }else if (fcount>1){  
                  tbm=(DefaultTableModel) t_filtro.getModel();
                 codigo=t_filtro.getValueAt(fselect, 0).toString();
                 cod_barra=t_filtro.getValueAt(fselect, 1).toString();
                 producto=t_filtro.getValueAt(fselect, 2).toString();
-                //stock=t_filtro.getValueAt(fselect, 2).toString();
                 precio_compra=t_filtro.getValueAt(fselect, 3).toString();
             }
             cantidad=(t_cantidad.getText());
@@ -127,12 +124,8 @@ public class v_compra extends javax.swing.JInternalFrame {
                 tbm=(DefaultTableModel) t_compra.getModel();
                 String filaelemento[] = {codigo,cod_barra,producto,cantidad,precio_compra};
                 tbm.addRow(filaelemento);
-            }
-            
-            
-            
-            
-        } catch (Exception e) {
+            }  
+        } catch (NumberFormatException e) {
         }
     }
     
@@ -142,13 +135,13 @@ public class v_compra extends javax.swing.JInternalFrame {
         c_producto c = new c_producto(con);
         List<m_producto> listar = new ArrayList<m_producto>();
         listar=c.listar();
-        DefaultTableModel tbm = (DefaultTableModel)t_filtro.getModel();
-        for(int i = tbm.getRowCount()-1; i >= 0; i--){
-            tbm.removeRow(i);
+        DefaultTableModel tbm_filtro = (DefaultTableModel)t_filtro.getModel();
+        for(int i = tbm_filtro.getRowCount()-1; i >= 0; i--){
+            tbm_filtro.removeRow(i);
             }
         int i = 0;
         for(m_producto mp : listar){
-           tbm.addRow(new String[1]);
+           tbm_filtro.addRow(new String[1]);
            t_filtro.setValueAt(mp.getCodigo(), i, 0);
            t_filtro.setValueAt(mp.getCod_barra(), i, 1);
            t_filtro.setValueAt(mp.getProducto(), i, 2);
@@ -161,7 +154,6 @@ public class v_compra extends javax.swing.JInternalFrame {
     
     private void limpiaTabla(){
         try{
-            DefaultTableModel tbm = (DefaultTableModel) t_compra.getModel();
             for(int i=0; i<t_compra.getRowCount(); i++){
                 tbm.removeRow(i); 
                  i-=1;
@@ -230,7 +222,7 @@ public class v_compra extends javax.swing.JInternalFrame {
         t_filtro.getColumnModel().getColumn(2).setCellRenderer(r);   
         t_filtro.getColumnModel().getColumn(3).setCellRenderer(r);
         t_filtro.getColumnModel().getColumn(4).setCellRenderer(r);
-        t_filtro.setAutoResizeMode(t_filtro.AUTO_RESIZE_OFF);
+        t_filtro.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         t_filtro.getColumnModel().getColumn(0).setMaxWidth(0);
         t_filtro.getColumnModel().getColumn(0).setMinWidth(0);
         t_filtro.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -252,7 +244,7 @@ public class v_compra extends javax.swing.JInternalFrame {
         t_compra.getColumnModel().getColumn(2).setCellRenderer(r);
         t_compra.getColumnModel().getColumn(3).setCellRenderer(r);
         t_compra.getColumnModel().getColumn(4).setCellRenderer(r);
-        t_compra.setAutoResizeMode(t_filtro.AUTO_RESIZE_OFF);
+        t_compra.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         t_compra.getColumnModel().getColumn(0).setMinWidth(0);
         t_compra.getColumnModel().getColumn(0).setMaxWidth(0);
         t_compra.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -265,21 +257,19 @@ public class v_compra extends javax.swing.JInternalFrame {
     
     private void eliminar(){
         int fsel,resp,fil;
-
         try {
             fsel = t_compra.getSelectedRow();
             if (fsel==-1) {
                 JOptionPane.showMessageDialog(null,"SELECCIONE UN PRODUCTO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
             }else{
-                resp=JOptionPane.showConfirmDialog(null,"DESEA ELIMINAR ","ELIMINAR",JOptionPane.YES_OPTION);
-                
+                resp=JOptionPane.showConfirmDialog(null,"DESEA ELIMINAR ","ELIMINAR",JOptionPane.YES_OPTION);               
                 if (resp==JOptionPane.YES_OPTION) {
                      tbm=(DefaultTableModel) t_compra.getModel();                 
                      tbm.removeRow(fsel);
                      JOptionPane.showMessageDialog(null,"PRODUCTO ELIMINADO","ELIMINAR",JOptionPane.WARNING_MESSAGE,eliminar);
                 }
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null,"PRODUCTO NO ELIMINADO","ELIMINAR",JOptionPane.ERROR);
         }
     }
@@ -302,7 +292,6 @@ public class v_compra extends javax.swing.JInternalFrame {
         String usuario="";
         int u=0,t=0;
         try {
-                    
                     usuario=tf_usuario.getText();
                     Statement sentencia = null;
                     ResultSet resultado = null;
@@ -311,7 +300,7 @@ public class v_compra extends javax.swing.JInternalFrame {
                     while (resultado.next()){
                         u=resultado.getInt(1);
                     }  
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         cp.setId(Integer.parseInt(tf_nro_compra.getText()));
         cp.setUsuario(u);
@@ -620,7 +609,6 @@ public class v_compra extends javax.swing.JInternalFrame {
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
         int fselect = t_filtro.getSelectedRow();
         String nl = System.getProperty("line.separator");
-
             if((fselect==-1)&&(t_cantidad.getText().equals(""))){   
                  JOptionPane.showMessageDialog(null, "INGRESE PRODUCTO"+ nl +"INGRESE CANTIDAD","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
             }else if (fselect==-1){
@@ -637,7 +625,6 @@ public class v_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_b_agregarActionPerformed
 
     private void b_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_grabarActionPerformed
-       
          int c = t_compra.getRowCount();
         if (c==0) {
             JOptionPane.showMessageDialog(this, "CARGUE PRODUCTO","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);

@@ -1,22 +1,17 @@
 
 package vista;
 
-import controlador.c_usuario;
 import controlador.comunes;
 import controlador.conexion;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import modelo.m_usuario;
 import static vista.v_m_producto.i_producto;
 import static vista.v_venta.i_venta;
 import static vista.v_compra.i_compra;
@@ -28,6 +23,13 @@ public class v_sesion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         textfields = new JTextField[]{tf_usu,pf_pass};
+    }
+     public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
     private Connection conn;
     
@@ -51,30 +53,25 @@ public class v_sesion extends javax.swing.JFrame {
             {
                    this.setVisible(false);
                    principal p = new principal();
-                   
                    v_c_password cp = new v_c_password();
                    i_cambiarp=null;
-                   cp.tf_usu.setText(usuario);
-                   
+                   v_c_password.tf_usu.setText(usuario);                
                    v_venta v = new v_venta();
                    i_venta=null;
-                   v.tf_usuario.setText(usuario);
-                   
+                   v_venta.tf_usuario.setText(usuario);                
                    v_compra c = new v_compra();
                    i_compra=null;
-                   c.tf_usuario.setText(usuario);
-                   
+                   v_compra.tf_usuario.setText(usuario);                 
                    p.show();
-                   p.l_usuario.setText(usuario);
+                   principal.l_usuario.setText(usuario);
                    p.m_archivo.setEnabled(true);
                    p.m_mantenimiento.setEnabled(true);
                    p.m_movimiento.setEnabled(true);
                    p.m_reporte.setEnabled(true); 
                    p.m_busqueda.setEnabled(true);
-                   
                    v_m_producto pr = new v_m_producto();
                    i_producto=null;
-                   pr.tf_usuario.setText(usuario);
+                   v_m_producto.tf_usuario.setText(usuario);
             }
             if(tipo.equals("INVITADO"))
             {
@@ -82,14 +79,12 @@ public class v_sesion extends javax.swing.JFrame {
                    principal p = new principal();
                    v_venta v = new v_venta();
                    i_venta=null;
-                   v.tf_usuario.setText(usuario);
-                   
+                   v_venta.tf_usuario.setText(usuario);           
                    v_compra c = new v_compra();
                    i_compra=null;
-                   c.tf_usuario.setText(usuario);
-                   
+                   v_compra.tf_usuario.setText(usuario);
                    p.show();
-                   p.l_usuario.setText(usuario);
+                   principal.l_usuario.setText(usuario);
                    p.m_archivo.setEnabled(true);
                    p.m_mantenimiento.setEnabled(true);
                    p.m_movimiento.setEnabled(true);
@@ -98,8 +93,8 @@ public class v_sesion extends javax.swing.JFrame {
                    p.jm_usuario.setVisible(false);
                    v_m_producto pr = new v_m_producto();
                    i_producto=null;
-                   pr.tf_usuario.setText(usuario);
-                   pr.t_stock.setEnabled(false);
+                   v_m_producto.tf_usuario.setText(usuario);
+                   v_m_producto.t_stock.setEnabled(false);
             }
             if((!tipo.equals("ADMINISTRADOR"))&& (!tipo.equals("INVITADO")))
             {
@@ -224,6 +219,7 @@ public class v_sesion extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    @SuppressWarnings("empty-statement")
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String usu=tf_usu.getText().trim();
         String pas=new String(pf_pass.getPassword()).trim();
@@ -301,18 +297,4 @@ public class v_sesion extends javax.swing.JFrame {
     private javax.swing.JPasswordField pf_pass;
     private javax.swing.JTextField tf_usu;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the conn
-     */
-    public Connection getConn() {
-        return conn;
-    }
-
-    /**
-     * @param conn the conn to set
-     */
-    public void setConn(Connection conn) {
-        this.conn = conn;
-    }
 }

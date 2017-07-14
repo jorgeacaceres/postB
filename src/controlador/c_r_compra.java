@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import modelo.m_r_compra;
-import modelo.m_r_venta;
 
 
 public class c_r_compra {

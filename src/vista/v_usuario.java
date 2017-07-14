@@ -19,12 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import modelo.m_producto;
 import modelo.m_usuario;
-import static vista.v_c_password.i_cambiarp;
-import static vista.v_compra.i_compra;
-import static vista.v_m_producto.i_producto;
-import static vista.v_venta.i_venta;
 
 public class v_usuario extends javax.swing.JInternalFrame {
 
@@ -106,7 +101,6 @@ public class v_usuario extends javax.swing.JInternalFrame {
             t_usuario.setValueAt(mc.getTipo(), i, 3);
             i++;
         }
-
         conexion.cerrarConexion(con);
     }
 
@@ -141,7 +135,7 @@ public class v_usuario extends javax.swing.JInternalFrame {
         t_usuario.getColumnModel().getColumn(0).setCellRenderer(r);
         t_usuario.getColumnModel().getColumn(2).setCellRenderer(r);
         t_usuario.getColumnModel().getColumn(3).setCellRenderer(r);       
-        t_usuario.setAutoResizeMode(t_usuario.AUTO_RESIZE_OFF);
+        t_usuario.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         t_usuario.getColumnModel().getColumn(0).setPreferredWidth(180);
         t_usuario.getColumnModel().getColumn(1).setMaxWidth(0);
         t_usuario.getColumnModel().getColumn(1).setMinWidth(0);
@@ -174,8 +168,7 @@ public class v_usuario extends javax.swing.JInternalFrame {
             }
             if(tipo.equals("INVITADO"))
             {
-               JOptionPane.showMessageDialog(null, "PERMISO DENEGADO", "ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
-               
+               JOptionPane.showMessageDialog(null, "PERMISO DENEGADO", "ADVERTENCIA",JOptionPane.WARNING_MESSAGE);       
             }
             if((!tipo.equals("ADMINISTRADOR"))&& (!tipo.equals("INVITADO")))
             {
@@ -518,7 +511,6 @@ public class v_usuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
-
         String usu,contra;
         usu=tf_usu.getText();
         contra=tf_contraseña.getText();
@@ -551,7 +543,7 @@ public class v_usuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tf_busquedaKeyReleased
 
     private void t_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_usuarioMouseClicked
-           
+     
     }//GEN-LAST:event_t_usuarioMouseClicked
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated

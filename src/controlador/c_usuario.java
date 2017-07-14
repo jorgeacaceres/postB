@@ -1,6 +1,7 @@
 
 package controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,6 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import modelo.m_producto;
 import modelo.m_usuario;
 
 public class c_usuario {
@@ -69,7 +69,7 @@ public class c_usuario {
                 JOptionPane.showMessageDialog(null, "NO AGREGADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
                 return "Error al agregar";
              }
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             return e.getMessage();
         }
     }
@@ -146,7 +146,7 @@ public class c_usuario {
              JOptionPane.showMessageDialog(null, "NO MODIFICADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
              return "registro no modificado";
             }
-      } catch (Exception e) {
+      } catch (HeadlessException | SQLException e) {
           return e.getMessage();
       }
   }
@@ -171,7 +171,6 @@ public class c_usuario {
             }
             return listaCodigo;
             } else {
-            
             return null;
             }
      } catch (SQLException e) {

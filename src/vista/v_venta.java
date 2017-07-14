@@ -5,7 +5,6 @@ import controlador.c_venta;
 import controlador.c_venta_detalle;
 import controlador.comunes;
 import controlador.conexion;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -35,6 +34,7 @@ import modelo.m_cliente;
 import modelo.m_producto;
 import modelo.m_venta;
 import modelo.m_venta_detalle;
+import static vista.principal.dp_principal;
 
 public class v_venta extends javax.swing.JInternalFrame {
     DefaultTableModel tbm;
@@ -53,9 +53,9 @@ public class v_venta extends javax.swing.JInternalFrame {
         lbl_total_pagar.setText(fd_total.format(total));
         grabar= new ImageIcon("src/graficos/guardar-archivo-icono-6713-32.png");
         eliminar= new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
-        int a = principal.dp_principal.getWidth()-this.getWidth();
-        int b = principal.dp_principal.getHeight()-this.getHeight();
-        setLocation(a/2, b/2);
+        int _width = principal.dp_principal.getWidth()-this.getWidth();
+        int _height = principal.dp_principal.getHeight()-this.getHeight();
+        setLocation(_width/2, _height/2);
         i_venta="";
         textfields = new JTextField[]{tf_exentas,tf_iva_5,tf_iva_10,tf_total,
                                       tf_iva5,tf_iva10,tf_iva_total,tf_c_nr,
@@ -385,8 +385,7 @@ public class v_venta extends javax.swing.JInternalFrame {
          String id="",codigo="", producto="", precio_venta="",cantidad="",
                     iva="",exentas="",iva_5="",iva_10="",valor_string,cod="";
             Integer valor_int=0,stock=0;
-        try {
-            
+        try {            
             if(fcount==1){
                 tbm=(DefaultTableModel) t_filtro.getModel();
                 id=t_nro_factura.getText();
@@ -630,6 +629,7 @@ public class v_venta extends javax.swing.JInternalFrame {
         };
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
+        b_registrar = new javax.swing.JButton();
         p_cabecera = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -810,7 +810,13 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        d_agregar_cliente.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_agregar_cliente.setTitle("CLIENTES");
+        d_agregar_cliente.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                d_agregar_clienteWindowClosed(evt);
+            }
+        });
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "BUSQUEDA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 16))); // NOI18N
         jPanel9.setPreferredSize(new java.awt.Dimension(485, 475));
@@ -843,6 +849,13 @@ public class v_venta extends javax.swing.JInternalFrame {
 
         jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/herramienta-de-busqueda-de-icono-8960-32.png"))); // NOI18N
 
+        b_registrar.setText("REGISTRAR");
+        b_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_registrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -854,19 +867,28 @@ public class v_venta extends javax.swing.JInternalFrame {
                 .addComponent(tf_busqueda_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel25)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(b_registrar)
+                .addContainerGap(18, Short.MAX_VALUE))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_busqueda_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel25))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tf_busqueda_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel24)))
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
+                        .addComponent(b_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout d_agregar_clienteLayout = new javax.swing.GroupLayout(d_agregar_cliente.getContentPane());
@@ -875,7 +897,7 @@ public class v_venta extends javax.swing.JInternalFrame {
             d_agregar_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(d_agregar_clienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                 .addContainerGap())
         );
         d_agregar_clienteLayout.setVerticalGroup(
@@ -1106,6 +1128,7 @@ public class v_venta extends javax.swing.JInternalFrame {
         tf_c_cr.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         tf_c_cr.setEnabled(false);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graficos/herramienta-de-busqueda-de-icono-8960-16.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -1174,7 +1197,8 @@ public class v_venta extends javax.swing.JInternalFrame {
                     .addGroup(p_cabeceraLayout.createSequentialGroup()
                         .addComponent(tf_c_nr)
                         .addGap(4, 4, 4)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108))
                     .addGroup(p_cabeceraLayout.createSequentialGroup()
                         .addGroup(p_cabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jdt, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1185,8 +1209,8 @@ public class v_venta extends javax.swing.JInternalFrame {
                                 .addComponent(tf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(p_cabeceraLayout.createSequentialGroup()
                                 .addGap(56, 56, 56)
-                                .addComponent(jLabel23)))))
-                .addGap(94, 94, 94)
+                                .addComponent(jLabel23)))
+                        .addGap(94, 94, 94)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54))
             .addGroup(p_cabeceraLayout.createSequentialGroup()
@@ -1537,16 +1561,30 @@ public class v_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_cancelarActionPerformed
 
     private void tf_iva_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_iva_5ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_tf_iva_5ActionPerformed
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-
     }//GEN-LAST:event_formKeyTyped
 
     private void t_buscar_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_buscar_productoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_t_buscar_productoActionPerformed
+
+    private void b_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_registrarActionPerformed
+        String cliente = v_cliente.i_cliente;
+        if (cliente==null) {
+             v_cliente cl = new v_cliente();
+            dp_principal.add(cl);
+            cl.show();
+            d_agregar_cliente.dispose();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
+        }
+    }//GEN-LAST:event_b_registrarActionPerformed
+
+    private void d_agregar_clienteWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_d_agregar_clienteWindowClosed
+        tf_busqueda_cliente.setText("");          
+        ver_datos_cliente();
+    }//GEN-LAST:event_d_agregar_clienteWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1555,6 +1593,7 @@ public class v_venta extends javax.swing.JInternalFrame {
     private javax.swing.JButton b_close;
     private javax.swing.JButton b_eliminar;
     private javax.swing.JButton b_factura;
+    private javax.swing.JButton b_registrar;
     private javax.swing.JButton b_salir;
     private javax.swing.ButtonGroup bg_busqueda;
     private javax.swing.JButton bt_cancelar;

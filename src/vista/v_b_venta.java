@@ -38,9 +38,9 @@ public class v_b_venta extends javax.swing.JInternalFrame {
         initComponents();
         grabar= new ImageIcon("src/graficos/guardar-archivo-icono-6713-32.png");
         eliminar= new ImageIcon("src/graficos/eliminar-cancelar-icono-4935-32.png");
-        int a = principal.dp_principal.getWidth()-this.getWidth();
-        int b = principal.dp_principal.getHeight()-this.getHeight();
-        setLocation(a/2, b/2);
+        int _Width = principal.dp_principal.getWidth()-this.getWidth();
+        int _Height = principal.dp_principal.getHeight()-this.getHeight();
+        setLocation(_Width/2, _Height/2);
         i_b_venta="";
         textfields = new JTextField[]{tf_exentas,tf_iva_5,tf_iva_10,tf_total,
                                       tf_iva5,tf_iva10,tf_iva_total,tf_c_nr,
@@ -95,7 +95,6 @@ public class v_b_venta extends javax.swing.JInternalFrame {
                     }
         }catch(SQLException e){ 
         }
-        
         t_nro_factura.setText(id);
         tf_c_nr.setText(nombre_razon);
         tf_c_cr.setText(ci_ruc);
@@ -154,8 +153,7 @@ public class v_b_venta extends javax.swing.JInternalFrame {
         l_iva_10=Double.parseDouble(tf_iva_10.getText())/11d;
         tf_iva10.setText(fd.format(l_iva_10));
         l_total=Double.parseDouble(tf_iva5.getText())+Double.parseDouble(tf_iva10.getText());
-        tf_iva_total.setText(fd.format(l_total));
-       
+        tf_iva_total.setText(fd.format(l_total));   
     }
     
     private void autocompletado(){
@@ -196,8 +194,6 @@ public class v_b_venta extends javax.swing.JInternalFrame {
         t_venta.getColumnModel().getColumn(3).setPreferredWidth(100);
         t_venta.getColumnModel().getColumn(4).setPreferredWidth(100);
         t_venta.getColumnModel().getColumn(5).setPreferredWidth(100);
-
-
         //seleccion simple una sola fila
         t_venta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
@@ -1041,7 +1037,6 @@ public class v_b_venta extends javax.swing.JInternalFrame {
                 setear_cabecera(); 
                 setear_detalle();
            }
-           
         }
     }//GEN-LAST:event_txt_busquedaKeyTyped
 

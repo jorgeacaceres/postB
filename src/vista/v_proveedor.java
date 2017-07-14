@@ -3,12 +3,12 @@ package vista;
 
 import controlador.*;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -81,7 +81,6 @@ public class v_proveedor extends javax.swing.JInternalFrame {
             t_proveedor.setValueAt(mc.getTelefono(), i, 3);
             i++;
         }
-
         conexion.cerrarConexion(con);
     }
 
@@ -117,8 +116,7 @@ public class v_proveedor extends javax.swing.JInternalFrame {
         t_proveedor.getColumnModel().getColumn(1).setCellRenderer(r);
         t_proveedor.getColumnModel().getColumn(2).setCellRenderer(r);
         t_proveedor.getColumnModel().getColumn(3).setCellRenderer(r);
-        
-        t_proveedor.setAutoResizeMode(t_proveedor.AUTO_RESIZE_OFF);
+        t_proveedor.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         t_proveedor.getColumnModel().getColumn(0).setMaxWidth(0);
         t_proveedor.getColumnModel().getColumn(0).setMinWidth(0);
         t_proveedor.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -141,7 +139,6 @@ public class v_proveedor extends javax.swing.JInternalFrame {
     }
 
     private void setear() {
-        //JOptionPane.showMessageDialog(null, "doble click");
         DefaultTableModel tbm;
         int index = t_proveedor.getSelectedRow();
         try {
@@ -154,14 +151,12 @@ public class v_proveedor extends javax.swing.JInternalFrame {
                 ci_ruc = t_proveedor.getValueAt(index, 1).toString();
                 nombre_razon = t_proveedor.getValueAt(index, 2).toString();
                 telefono = t_proveedor.getValueAt(index, 3).toString();
-     
-               
                 tf_codigo.setText(codigo);
                 tf_ci_ruc.setText(ci_ruc);
                 tf_nombre_razon.setText(nombre_razon);
                 tf_telefono.setText(telefono);
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
         }
         this.tf_ci_ruc.requestFocus();
     }
@@ -483,7 +478,6 @@ public class v_proveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void tf_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_busquedaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_tf_busquedaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

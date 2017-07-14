@@ -1,14 +1,9 @@
 
 package vista;
 
-import java.awt.Color;
-import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.sf.jasperreports.engine.JRException;
 import reporte.*;
 import static vista.v_m_producto.i_producto;
@@ -25,7 +20,6 @@ public class principal extends javax.swing.JFrame {
     public principal() {
         initComponents(); 
         setSize(1367, 730);  
-        
     }
     
     public void sesion(){
@@ -39,7 +33,6 @@ public class principal extends javax.swing.JFrame {
         i_compra=null;
         i_venta=null;
         i_cambiarp=null;
-        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -312,7 +305,6 @@ public class principal extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
         }
-        
     }//GEN-LAST:event_jm_compraActionPerformed
 
     private void jm_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_ventaActionPerformed
@@ -323,8 +315,7 @@ public class principal extends javax.swing.JFrame {
             v.show();
         }else{
             JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
-        }
-       
+        }   
     }//GEN-LAST:event_jm_ventaActionPerformed
 
     private void jm_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_salirActionPerformed
@@ -340,7 +331,6 @@ public class principal extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
         }
-       
     }//GEN-LAST:event_jm_usuarioActionPerformed
 
     private void jm_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_clienteActionPerformed
@@ -371,11 +361,9 @@ public class principal extends javax.swing.JFrame {
             reportes.reporte_stock();
         } catch (JRException e) {
             java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
         }
         catch (SQLException e) {
             java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
         }
     }//GEN-LAST:event_jm_stockActionPerformed
 
@@ -392,8 +380,6 @@ public class principal extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(rootPane, "VENTANA ABIERTA");
         }
-        
-        /**/
     }//GEN-LAST:event_jm_compra_rActionPerformed
 
     private void jm_b_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_b_ventaActionPerformed
@@ -419,10 +405,6 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_b_productoActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-       /* v_venta v = new v_venta();
-        if(v.tf_total.getText().equals("")){
-            v.eliminar_venta();
-        }*/
     }//GEN-LAST:event_formWindowClosed
 
     private void jm_cambiar_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_cambiar_passwordActionPerformed
@@ -453,11 +435,9 @@ public class principal extends javax.swing.JFrame {
             reportes.reporte_productos();
         } catch (JRException e) {
             java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
         }
         catch (SQLException e) {
             java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

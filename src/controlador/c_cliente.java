@@ -1,6 +1,7 @@
 
 package controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,7 +65,7 @@ public class c_cliente {
                 JOptionPane.showMessageDialog(null, "NO AGREGADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
                 return "Error al agregar";
              }
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             return e.getMessage();
         }
     }
@@ -141,7 +142,7 @@ public class c_cliente {
              JOptionPane.showMessageDialog(null, "NO MODIFICADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
              return "registro no modificado";
             }
-      } catch (Exception e) {
+      } catch (HeadlessException | SQLException e) {
           return e.getMessage();
       }
   }

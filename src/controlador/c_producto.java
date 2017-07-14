@@ -2,7 +2,6 @@
 package controlador;
 
 import java.awt.HeadlessException;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +51,7 @@ public class c_producto {
                 JOptionPane.showMessageDialog(null, "NO AGREGADO","ATENCION",JOptionPane.WARNING_MESSAGE,fail);
                 return "Error al agregar";
              }
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             return e.getMessage();
         }
     }

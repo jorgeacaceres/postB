@@ -6,16 +6,12 @@ import controlador.conexion;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.m_r_venta;
 import net.sf.jasperreports.engine.JRException;
@@ -55,108 +51,6 @@ public class v_r_venta extends javax.swing.JInternalFrame {
                      rv.setF_fin(f2);
                      c.agregar_fecha(rv);           
     }
-
-   /* public void buscar(){
-         try {
-            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-            Date f,f1,f2;
-            Double s=0d;
-            f1 =jdt1.getDate();
-            f2 =jdt2.getDate();
-            String fecha1,fecha2;
-            fecha1= df.format(f1);
-            fecha2= df.format(f2);
-            
-            String fecha="",producto="",cantidad="",sub="";
-             Connection con = conexion.abrirConexion();
-             Statement st=con.createStatement(); 
-                    String sql=("select v.f,p.nombre,sum(vd.cantidad)as cantidad, sum(subtotal)as sub " +
-                                "from venta_detalle as vd " +
-                                "inner join producto as p " +
-                                "on vd.codigo_producto=p.codigo " +
-                                "inner join venta as v " +
-                                "on vd.id=v.id " +
-                                "where v.f between '"+fecha1+"' and '"+fecha2+"' " +
-                                "group by v.f,p.nombre " +
-                                "order by v.f desc;");
-            ResultSet rs= st.executeQuery(sql);
-            while(rs.next()){
-                DateFormat ff = new SimpleDateFormat("dd-MMM-yyyy");
-                f=rs.getDate(1);
-                producto=rs.getString(2);
-                cantidad=rs.getString(3);
-                fecha=ff.format(f);
-                s=rs.getDouble(4);
-                sub=String.valueOf(s);
-                tbm=(DefaultTableModel) t_buscar.getModel();
-                String fila[]={fecha,producto,cantidad,sub};
-                tbm.addRow(fila);
-            }
-                
-            } catch (Exception e) {
-            }
-           //return rs;
-    }
-    public void verDatos(){
-         try {
-             Double s=0d;
-             String fecha,producto="",cantidad="",sub="";
-             Date f;
-             Connection con = conexion.abrirConexion();
-             Statement st=con.createStatement(); 
-                    String sql=("select v.f,p.nombre,sum(vd.cantidad)as cantidad, sum(subtotal)as sub " +
-                                "from venta_detalle as vd " +
-                                "inner join producto as p " +
-                                "on vd.codigo_producto=p.codigo " +
-                                "inner join venta as v " +
-                                "on vd.id=v.id " +
-                                "group by v.f,p.nombre " +
-                                "order by v.f desc;");
-            ResultSet rs= st.executeQuery(sql);
-            while(rs.next()){
-                DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                f=rs.getDate(1);
-                producto=rs.getString(2);
-                cantidad=rs.getString(3);
-                fecha=df.format(f);
-                s=rs.getDouble(4);
-                sub=String.valueOf(s);
-                tbm=(DefaultTableModel) t_buscar.getModel();
-                String fila[]={fecha,producto,cantidad,sub};
-                tbm.addRow(fila);
-            }
-                
-            } catch (Exception e) {
-            }
-           //return rs;
-    }
-    
-    private void limpiaTabla(){
-        try{
-            DefaultTableModel tbm = (DefaultTableModel) t_buscar.getModel();
-            for(int i=0; i<t_buscar.getRowCount(); i++){
-                tbm.removeRow(i); 
-                 i-=1;
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
-    
-    private void grilla(){
-        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
-        r.setHorizontalAlignment(SwingConstants.CENTER);
-        t_buscar.getColumnModel().getColumn(0).setCellRenderer(r);
-        t_buscar.getColumnModel().getColumn(1).setCellRenderer(r); 
-        t_buscar.getColumnModel().getColumn(2).setCellRenderer(r); 
-        t_buscar.getColumnModel().getColumn(3).setCellRenderer(r); 
-        t_buscar.setAutoResizeMode(t_buscar.AUTO_RESIZE_OFF);   
-        t_buscar.getColumnModel().getColumn(0).setPreferredWidth(150);
-        t_buscar.getColumnModel().getColumn(1).setPreferredWidth(250);
-        t_buscar.getColumnModel().getColumn(2).setPreferredWidth(100);
-        t_buscar.getColumnModel().getColumn(3).setPreferredWidth(100);
-        t_buscar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    }*/
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -286,16 +180,9 @@ public class v_r_venta extends javax.swing.JInternalFrame {
                 try {
                     reporte  reportes = new reporte();
                     reportes.reporte_venta();
-                } catch (JRException e) {
+                } catch (JRException | SQLException e) {
                     java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
                 }
-                catch (SQLException e) {
-                    java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
-                }
-                //limpiaTabla(); 
-                //buscar();
             }else if(jdt2.getDate().before(jdt1.getDate())){
                 JOptionPane.showMessageDialog(this, "FECHA FIN DEBE SER MAYOR","ATENCION",JOptionPane.WARNING_MESSAGE);
             }else{
@@ -303,19 +190,11 @@ public class v_r_venta extends javax.swing.JInternalFrame {
                 try {
                     reporte  reportes = new reporte();
                     reportes.reporte_venta();
-                } catch (JRException e) {
+                } catch (JRException | SQLException e) {
                     java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
-                }
-                catch (SQLException e) {
-                    java.util.logging.Logger.getLogger(reporte.class.getName()).log(Level.SEVERE, null, e);
-
-                }
-                //limpiaTabla(); 
-                //buscar();   
+                }  
             }
         }
-        
     }//GEN-LAST:event_b_buscarActionPerformed
 
 

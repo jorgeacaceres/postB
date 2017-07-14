@@ -23,8 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.m_producto;
-import static vista.v_compra.tf_usuario;
-import static vista.v_venta.tf_usuario;
 
 public class v_m_producto extends javax.swing.JInternalFrame {
     JTextField[] textfields;
@@ -65,7 +63,6 @@ public class v_m_producto extends javax.swing.JInternalFrame {
                         u=r1.getInt(1);
                     } 
         }catch(SQLException e){}
-         
         if (rb_si.isSelected()==true) {
             activo="SI";
         }else if (rb_no.isSelected()==true) {
@@ -78,7 +75,6 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         }else if (rb_iva10.isSelected()==true){
             iva=0;
         }
- 
         p.setCodigo(Integer.parseInt(t_codigo.getText().trim().toUpperCase()));
         p.setCod_barra(t_cod_barra.getText().trim());
         p.setProducto(t_producto.getText().trim().toUpperCase());
@@ -89,7 +85,6 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         }else if (t_stock.isEnabled()==false) {
             p.setStock(stock);
         }
-
         p.setIva(iva); 
         p.setActivo(activo);
         p.setUsuario(u);
@@ -192,11 +187,9 @@ public class v_m_producto extends javax.swing.JInternalFrame {
            i++;
            }
             conexion.cerrarConexion(con);
-        
     }
     
     private void setear(){
-     //JOptionPane.showMessageDialog(null, "doble click");
           DefaultTableModel tbm;  
           int index = t_product.getSelectedRow();
           try {
@@ -213,7 +206,6 @@ public class v_m_producto extends javax.swing.JInternalFrame {
                   stock=t_product.getValueAt(index, 5).toString();
                   iva=t_product.getValueAt(index, 6).toString();
                   activo_=t_product.getValueAt(index, 7).toString();
-                  
                   if(iva.equals("5")){
                         t_codigo.setText(codigo);
                         t_cod_barra.setText(c_barra);
@@ -317,7 +309,7 @@ public class v_m_producto extends javax.swing.JInternalFrame {
         t_product.getColumnModel().getColumn(6).setCellRenderer(r);
         t_product.getColumnModel().getColumn(7).setCellRenderer(r);
         t_product.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        t_product.setAutoResizeMode(t_product.AUTO_RESIZE_OFF);
+        t_product.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         t_product.getColumnModel().getColumn(0).setMaxWidth(0);
         t_product.getColumnModel().getColumn(0).setMinWidth(0);
         t_product.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -832,7 +824,6 @@ public class v_m_producto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_b_modificarActionPerformed
 
     private void rb_iva10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_iva10ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_rb_iva10ActionPerformed
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
